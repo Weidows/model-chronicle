@@ -4,7 +4,7 @@
 
 首卷：**DeepSeek（2023.10 → 2026.09，31 个节点）**。
 
-在线预览：<https://blog.weidows.tech/model-chronicle/>（GitHub Pages；<https://weidows.github.io/model-chronicle/> 会 301 到同一地址）
+在线预览：<https://model-chronicle.weidows.tech/>（GitHub Pages + 自定义域；`weidows.github.io/model-chronicle/` 与 `blog.weidows.tech/model-chronicle/` 均会 301 到同一地址）
 
 ![头部](docs/screenshots/hero.png)
 ![时间轴](docs/screenshots/timeline.png)
@@ -83,8 +83,22 @@ scripts/                fetch + generate（可重跑）
 
 ## 部署
 
-**GitHub Pages**（当前线上）：`.github/workflows/deploy.yml` 在 `main` 分支推送时
-用 `VITE_BASE=/<repo>/` 构建并发布到 Pages。
+**GitHub Pages + 自定义域**（当前线上 <https://model-chronicle.weidows.tech/>）：
+`.github/workflows/deploy.yml` 在 `main` 推送时用 `VITE_BASE=/` 构建（自定义域把站点伺服在域名根），
+`public/CNAME` 与仓库 Pages 设置里的 `cname` 都指向该域名。
+
+绑域全过程（`gh` + `cfcli`，可复现）：
+
+```bash
+# 1. DNS：灰云（DNS-only）CNAME 指到 GitHub Pages，不能开 CF 代理，否则签不出证书
+cfcli -d weidows.tech add -t CNAME -l 1 model-chronicle weidows.github.io
+# 2. Pages 侧写入自定义域（PUT 返回 204 无正文）
+gh api --method PUT repos/Weidows/model-chronicle/pages -f cname=model-chronicle.weidows.tech
+# 3. DNS 校验通过（protected_domain_state=verified）+ 证书签发后，再强制 HTTPS
+gh api --method PUT repos/Weidows/model-chronicle/pages -F https_enforced=true
+```
+
+`cfcli` 的凭据来自 `~/.cfcli.yml`（`cfcli zones` 可自检）；`wrangler` 只在改用 CF Pages 托管时才需要。
 
 **Cloudflare Pages**（可选）：项目根目录 `base` 走 `VITE_BASE` 环境变量，根域名部署直接用默认值：
 

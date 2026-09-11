@@ -29,9 +29,11 @@ jobs:
         run: npm ci
 
       - name: Build
-        # Project sites are served from /<repo>/ — assets need that prefix.
+        # Custom domain model-chronicle.weidows.tech serves the site at the root,
+        # so assets must be absolute from "/". (Project-site path /model-chronicle/
+        # is only used when no custom domain is set — see README.)
         env:
-          VITE_BASE: /${{ github.event.repository.name }}/
+          VITE_BASE: /
         run: npm run build
 
       - name: SPA fallback

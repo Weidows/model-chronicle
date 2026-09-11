@@ -1,0 +1,221 @@
+@import 'tailwindcss';
+
+@custom-variant hover (&:hover);
+
+@theme {
+  --font-display: 'Orbitron', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-sans:
+    'Inter Variable', ui-sans-serif, system-ui, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --color-void: #04060b;
+  --color-abyss: #070c16;
+  --color-hull: #0b1322;
+  --color-deck: #101a2e;
+  --color-edge: #1c2a44;
+  --color-cyan: #38e2ff;
+  --color-mint: #2fe6a8;
+  --color-violet: #9270ff;
+  --color-amber: #ffb545;
+  --color-rose: #ff5d73;
+  --color-fog: #8b9dbd;
+  --color-snow: #e9f2ff;
+
+  --animate-scan: scan 7s linear infinite;
+  --animate-drift: drift 26s linear infinite;
+  --animate-pulse-ring: pulse-ring 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  --animate-float: float 9s ease-in-out infinite;
+  --animate-flicker: flicker 5.5s steps(1, end) infinite;
+  --animate-ticker: ticker 42s linear infinite;
+
+  @keyframes scan {
+    0% {
+      transform: translateY(-30%);
+      opacity: 0;
+    }
+    12% {
+      opacity: 0.55;
+    }
+    88% {
+      opacity: 0.35;
+    }
+    100% {
+      transform: translateY(130%);
+      opacity: 0;
+    }
+  }
+  @keyframes drift {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-40px, -40px, 0);
+    }
+  }
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(0.72);
+      opacity: 0.85;
+    }
+    100% {
+      transform: scale(2.1);
+      opacity: 0;
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-7px);
+    }
+  }
+  @keyframes flicker {
+    0%,
+    92%,
+    100% {
+      opacity: 1;
+    }
+    93% {
+      opacity: 0.55;
+    }
+    95% {
+      opacity: 0.9;
+    }
+    96% {
+      opacity: 0.68;
+    }
+  }
+  @keyframes ticker {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    background: var(--color-void);
+    color: var(--color-snow);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--color-cyan) 35%, transparent);
+    color: #fff;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #05080f;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1d2b45;
+    border-radius: 99px;
+    border: 2px solid #05080f;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2b3f63;
+  }
+  :focus-visible {
+    outline: 1px solid var(--color-cyan);
+    outline-offset: 2px;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ *  Shared sci-fi primitives
+ * ------------------------------------------------------------------ */
+@utility hud-panel {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 4%), rgb(255 255 255 / 0%)),
+    color-mix(in oklab, var(--color-hull) 82%, transparent);
+  border: 1px solid color-mix(in oklab, var(--color-edge) 88%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+}
+
+@utility hud-corners {
+  position: relative;
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    border-color: color-mix(in oklab, var(--color-cyan) 70%, transparent);
+    pointer-events: none;
+  }
+  &::before {
+    top: -1px;
+    left: -1px;
+    border-top: 1px solid;
+    border-left: 1px solid;
+  }
+  &::after {
+    bottom: -1px;
+    right: -1px;
+    border-bottom: 1px solid;
+    border-right: 1px solid;
+  }
+}
+
+@utility label-hud {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--color-cyan) 78%, var(--color-fog));
+}
+
+@utility text-glow {
+  text-shadow:
+    0 0 14px color-mix(in oklab, currentcolor 55%, transparent),
+    0 0 46px color-mix(in oklab, currentcolor 22%, transparent);
+}
+
+@utility num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+@utility grid-floor {
+  background-image:
+    linear-gradient(to right, rgb(56 226 255 / 7%) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(56 226 255 / 7%) 1px, transparent 1px);
+  background-size: 46px 46px;
+}
+
+@utility no-bar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

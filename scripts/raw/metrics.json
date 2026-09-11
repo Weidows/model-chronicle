@@ -1,0 +1,520 @@
+{
+ "deepseek-ai/deepseek-coder-6.7b-base": {
+  "downloads": 67195,
+  "likes": 127,
+  "usedStorage": 26962185543,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2023-10-23T16:15:39.000Z",
+  "lastModified": "2024-03-19T03:54:51.000Z",
+  "gated": false,
+  "tags": [
+   "license:other"
+  ]
+ },
+ "deepseek-ai/deepseek-coder-33b-instruct": {
+  "downloads": 5286,
+  "likes": 584,
+  "usedStorage": 133372226408,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2023-11-01T05:46:34.000Z",
+  "lastModified": "2024-03-07T08:25:20.000Z",
+  "gated": false,
+  "tags": [
+   "license:other"
+  ]
+ },
+ "deepseek-ai/deepseek-llm-7b-base": {
+  "downloads": 26729,
+  "likes": 146,
+  "usedStorage": 27641589098,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2023-11-29T03:08:22.000Z",
+  "lastModified": "2023-11-30T03:06:57.000Z",
+  "gated": false,
+  "tags": [
+   "license:other"
+  ]
+ },
+ "deepseek-ai/deepseek-llm-67b-chat": {
+  "downloads": 1807,
+  "likes": 207,
+  "usedStorage": 269700407276,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2023-11-29T03:30:00.000Z",
+  "lastModified": "2023-11-29T11:40:59.000Z",
+  "gated": false,
+  "tags": [
+   "license:other"
+  ]
+ },
+ "deepseek-ai/deepseek-moe-16b-base": {
+  "downloads": 11096,
+  "likes": 155,
+  "usedStorage": 32752135032,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2024-01-08T09:45:58.000Z",
+  "lastModified": "2024-01-12T03:12:15.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2401.06066",
+   "license:other"
+  ]
+ },
+ "deepseek-ai/deepseek-coder-7b-instruct-v1.5": {
+  "downloads": 739009,
+  "likes": 160,
+  "usedStorage": 13820763168,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2024-01-25T15:51:02.000Z",
+  "lastModified": "2024-02-05T03:38:36.000Z",
+  "gated": false,
+  "tags": [
+   "license:other"
+  ]
+ },
+ "deepseek-ai/deepseek-math-7b-instruct": {
+  "downloads": 5591,
+  "likes": 155,
+  "usedStorage": 27641588136,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2024-02-05T08:14:00.000Z",
+  "lastModified": "2024-02-06T10:38:24.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2402.03300",
+   "license:other"
+  ]
+ },
+ "deepseek-ai/deepseek-vl-7b-chat": {
+  "downloads": 8461,
+  "likes": 272,
+  "usedStorage": 14688085418,
+  "trendingScore": null,
+  "pipeline": "image-text-to-text",
+  "createdAt": "2024-03-07T06:14:29.000Z",
+  "lastModified": "2024-03-15T07:04:05.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2403.05525",
+   "license:other"
+  ]
+ },
+ "deepseek-ai/DeepSeek-V2": {
+  "downloads": 42596,
+  "likes": 335,
+  "usedStorage": 471486512925,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2024-04-22T07:53:46.000Z",
+  "lastModified": "2024-06-08T09:13:39.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2311.18743",
+   "arxiv:2405.04434",
+   "license:other"
+  ]
+ },
+ "deepseek-ai/DeepSeek-V2-Chat": {
+  "downloads": 21217,
+  "likes": 462,
+  "usedStorage": 471486512376,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2024-04-28T09:53:56.000Z",
+  "lastModified": "2024-06-08T09:14:11.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2405.04434",
+   "arxiv:2311.18743",
+   "license:other"
+  ]
+ },
+ "deepseek-ai/DeepSeek-V2-Lite": {
+  "downloads": 342882,
+  "likes": 187,
+  "usedStorage": 31413626576,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2024-05-15T05:31:53.000Z",
+  "lastModified": "2024-06-25T08:37:17.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2405.04434",
+   "license:other"
+  ]
+ },
+ "deepseek-ai/DeepSeek-Coder-V2-Instruct": {
+  "downloads": 10491,
+  "likes": 701,
+  "usedStorage": 471486512925,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2024-06-14T03:46:22.000Z",
+  "lastModified": "2024-08-21T06:42:50.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2401.06066",
+   "base_model:deepseek-ai/DeepSeek-Coder-V2-Base",
+   "base_model:finetune:deepseek-ai/DeepSeek-Coder-V2-Base",
+   "license:other"
+  ]
+ },
+ "deepseek-ai/DeepSeek-V2.5": {
+  "downloads": 5831,
+  "likes": 734,
+  "usedStorage": 471486512925,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2024-09-05T09:30:06.000Z",
+  "lastModified": "2024-12-11T12:08:06.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2405.04434",
+   "license:other"
+  ]
+ },
+ "deepseek-ai/deepseek-vl2": {
+  "downloads": 4874,
+  "likes": 389,
+  "usedStorage": 54961192528,
+  "trendingScore": null,
+  "pipeline": "image-text-to-text",
+  "createdAt": "2024-12-13T09:06:44.000Z",
+  "lastModified": "2024-12-18T08:18:21.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2412.10302",
+   "license:other"
+  ]
+ },
+ "deepseek-ai/DeepSeek-V3": {
+  "downloads": 1065138,
+  "likes": 4182,
+  "usedStorage": 688727648088,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2024-12-25T12:52:23.000Z",
+  "lastModified": "2025-03-27T04:01:45.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2412.19437"
+  ]
+ },
+ "deepseek-ai/DeepSeek-V3-Base": {
+  "downloads": 2402,
+  "likes": 1705,
+  "usedStorage": 688591926227,
+  "trendingScore": null,
+  "pipeline": null,
+  "createdAt": "2024-12-25T12:52:06.000Z",
+  "lastModified": "2025-03-27T04:00:09.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2412.19437"
+  ]
+ },
+ "deepseek-ai/DeepSeek-R1": {
+  "downloads": 709327,
+  "likes": 13619,
+  "usedStorage": 688628350856,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2025-01-20T03:46:07.000Z",
+  "lastModified": "2025-03-27T04:01:59.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2501.12948",
+   "license:mit"
+  ]
+ },
+ "deepseek-ai/DeepSeek-R1-Zero": {
+  "downloads": 9949,
+  "likes": 963,
+  "usedStorage": 688586727753,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2025-01-20T03:35:48.000Z",
+  "lastModified": "2025-03-27T04:02:04.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2501.12948",
+   "license:mit"
+  ]
+ },
+ "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B": {
+  "downloads": 522681,
+  "likes": 1612,
+  "usedStorage": 65527841532,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2025-01-20T09:19:00.000Z",
+  "lastModified": "2025-02-24T03:31:29.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2501.12948",
+   "license:mit"
+  ]
+ },
+ "deepseek-ai/Janus-Pro-7B": {
+  "downloads": 10897,
+  "likes": 3658,
+  "usedStorage": 29695390113,
+  "trendingScore": null,
+  "pipeline": "any-to-any",
+  "createdAt": "2025-01-26T12:05:50.000Z",
+  "lastModified": "2025-02-01T08:00:16.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2501.17811",
+   "license:mit"
+  ]
+ },
+ "deepseek-ai/DeepSeek-V3-0324": {
+  "downloads": 934873,
+  "likes": 3169,
+  "usedStorage": 688592341287,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2025-03-24T09:28:22.000Z",
+  "lastModified": "2025-03-27T04:01:53.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2412.19437",
+   "license:mit"
+  ]
+ },
+ "deepseek-ai/DeepSeek-Prover-V2-671B": {
+  "downloads": 746,
+  "likes": 831,
+  "usedStorage": 688586727753,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2025-04-30T06:14:35.000Z",
+  "lastModified": "2025-04-30T15:57:41.000Z",
+  "gated": false,
+  "tags": []
+ },
+ "deepseek-ai/DeepSeek-R1-0528": {
+  "downloads": 225134,
+  "likes": 2460,
+  "usedStorage": 688588119234,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2025-05-28T09:46:42.000Z",
+  "lastModified": "2025-05-29T11:37:44.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2501.12948",
+   "license:mit"
+  ]
+ },
+ "deepseek-ai/DeepSeek-V3.1": {
+  "downloads": 233589,
+  "likes": 830,
+  "usedStorage": 688595361908,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2025-08-21T02:37:52.000Z",
+  "lastModified": "2025-09-05T11:30:15.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2412.19437",
+   "base_model:deepseek-ai/DeepSeek-V3.1-Base",
+   "base_model:quantized:deepseek-ai/DeepSeek-V3.1-Base",
+   "license:mit"
+  ]
+ },
+ "deepseek-ai/DeepSeek-V3.1-Terminus": {
+  "downloads": 19156,
+  "likes": 366,
+  "usedStorage": 688588816461,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2025-09-22T04:56:04.000Z",
+  "lastModified": "2025-09-29T01:52:07.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2412.19437",
+   "base_model:deepseek-ai/DeepSeek-V3.1-Base",
+   "base_model:quantized:deepseek-ai/DeepSeek-V3.1-Base",
+   "license:mit"
+  ]
+ },
+ "deepseek-ai/DeepSeek-V3.2-Exp": {
+  "downloads": 60359,
+  "likes": 1000,
+  "usedStorage": 689483151335,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2025-09-29T06:07:26.000Z",
+  "lastModified": "2025-11-18T02:39:54.000Z",
+  "gated": false,
+  "tags": [
+   "base_model:deepseek-ai/DeepSeek-V3.2-Exp-Base",
+   "base_model:finetune:deepseek-ai/DeepSeek-V3.2-Exp-Base",
+   "license:mit"
+  ]
+ },
+ "deepseek-ai/DeepSeek-OCR": {
+  "downloads": 2394300,
+  "likes": 3351,
+  "usedStorage": 6711407201,
+  "trendingScore": null,
+  "pipeline": "image-text-to-text",
+  "createdAt": "2025-10-17T06:22:05.000Z",
+  "lastModified": "2025-11-04T02:36:12.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2510.18234",
+   "license:mit"
+  ]
+ },
+ "deepseek-ai/DeepSeek-Math-V2": {
+  "downloads": 682,
+  "likes": 707,
+  "usedStorage": 689483049129,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2025-11-27T09:54:23.000Z",
+  "lastModified": "2025-11-27T10:35:52.000Z",
+  "gated": false,
+  "tags": [
+   "base_model:deepseek-ai/DeepSeek-Math-V2",
+   "base_model:quantized:deepseek-ai/DeepSeek-Math-V2",
+   "license:apache-2.0"
+  ]
+ },
+ "deepseek-ai/DeepSeek-V3.2": {
+  "downloads": 1664551,
+  "likes": 1476,
+  "usedStorage": 689484423011,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2025-12-01T02:34:49.000Z",
+  "lastModified": "2025-12-01T11:04:59.000Z",
+  "gated": false,
+  "tags": [
+   "base_model:deepseek-ai/DeepSeek-V3.2-Exp-Base",
+   "base_model:finetune:deepseek-ai/DeepSeek-V3.2-Exp-Base",
+   "license:mit"
+  ]
+ },
+ "deepseek-ai/DeepSeek-OCR-2": {
+  "downloads": 942892,
+  "likes": 1089,
+  "usedStorage": 6779402071,
+  "trendingScore": null,
+  "pipeline": "image-text-to-text",
+  "createdAt": "2026-01-27T02:56:54.000Z",
+  "lastModified": "2026-02-03T00:33:19.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2601.20552",
+   "arxiv:2510.18234",
+   "license:apache-2.0"
+  ]
+ },
+ "deepseek-ai/DeepSeek-V4-Flash": {
+  "downloads": 1776693,
+  "likes": 2211,
+  "usedStorage": 159641337663,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2026-04-22T06:04:20.000Z",
+  "lastModified": "2026-06-22T12:12:13.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2606.19348",
+   "license:mit"
+  ]
+ },
+ "deepseek-ai/DeepSeek-V4-Pro": {
+  "downloads": 612515,
+  "likes": 5522,
+  "usedStorage": 864761623612,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2026-04-22T06:04:45.000Z",
+  "lastModified": "2026-06-22T12:12:50.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2606.19348",
+   "license:mit"
+  ]
+ },
+ "deepseek-ai/DeepSeek-V4-Flash-DSpark": {
+  "downloads": 697663,
+  "likes": 271,
+  "usedStorage": 166886535336,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2026-06-27T02:27:36.000Z",
+  "lastModified": "2026-07-04T03:15:12.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2606.19348",
+   "license:mit"
+  ]
+ },
+ "deepseek-ai/DeepSeek-V4-Flash-0731": {
+  "downloads": 4393881,
+  "likes": 3931,
+  "usedStorage": 166888735421,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2026-07-31T07:30:24.000Z",
+  "lastModified": "2026-08-01T03:07:41.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2606.19348",
+   "license:mit"
+  ]
+ },
+ "deepseek-ai/DeepSeek-V4-Pro-0813": {
+  "downloads": 171782,
+  "likes": 815,
+  "usedStorage": 1781787608346,
+  "trendingScore": null,
+  "pipeline": "text-generation",
+  "createdAt": "2026-08-13T03:05:06.000Z",
+  "lastModified": "2026-08-13T16:28:28.000Z",
+  "gated": false,
+  "tags": [
+   "arxiv:2606.19348",
+   "license:mit"
+  ]
+ },
+ "deepseek-ai/DeepSeek-V4-Flash-Vision-Exp": {
+  "downloads": 400892,
+  "likes": 862,
+  "usedStorage": 167819616863,
+  "trendingScore": null,
+  "pipeline": "image-text-to-text",
+  "createdAt": "2026-08-31T06:16:18.000Z",
+  "lastModified": "2026-09-01T09:22:10.000Z",
+  "gated": false,
+  "tags": [
+   "license:mit"
+  ]
+ },
+ "deepseek-ai/DeepSeek-V4.1-Flash": {
+  "downloads": 6,
+  "likes": 1537,
+  "usedStorage": 510302811119,
+  "trendingScore": null,
+  "pipeline": "image-text-to-text",
+  "createdAt": "2026-09-10T02:17:58.000Z",
+  "lastModified": "2026-09-10T08:18:10.000Z",
+  "gated": false,
+  "tags": [
+   "license:mit"
+  ]
+ }
+}

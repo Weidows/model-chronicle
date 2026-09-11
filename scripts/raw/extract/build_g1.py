@@ -1,0 +1,129 @@
+# -*- coding: utf-8 -*-
+import json, os
+
+D = "C:/Users/weidows/AppData/Local/Temp/dsweb"
+os.makedirs(D + "/extract", exist_ok=True)
+
+data = [
+{
+  "repo": "deepseek-ai/deepseek-coder-6.7b-base",
+  "total_params": "6.7B",
+  "activated_params": None,
+  "context_length": "16K",
+  "license": "DeepSeek License",
+  "key_innovations": ["Trained from scratch on 2T tokens (87% code, 13% natural language)", "16K window size", "Fill-in-the-Blank (FIM) task", "Project-level code completion and infilling", "Multi-Head Attention"],
+  "benchmarks": [],
+  "summary": "DeepSeek Coder 系列的 6.7B base 模型，从零在 2T tokens（87% 代码、13% 中英自然语言）上训练，用 16K 窗口和填空（FIM）任务支持项目级代码补全；卡片称其在 HumanEval、MultiPL-E、MBPP、DS-1000、APPS 上达到开源代码模型 SOTA，但未给出具体分数。",
+  "evidence": "deepseek-coder-6.7b-base is a 6.7B parameter model with Multi-Head Attention trained on 2 trillion tokens. | Each model is pre-trained on project-level code corpus by employing a window size of 16K and a extra fill-in-the-blank task"
+},
+{
+  "repo": "deepseek-ai/deepseek-coder-33b-instruct",
+  "total_params": "33B",
+  "activated_params": None,
+  "context_length": "16K",
+  "license": "DeepSeek License",
+  "key_innovations": ["Instruction-tuned on 2B tokens of instruction data", "Initialized from deepseek-coder-33b-base", "Trained from scratch on 2T tokens (87% code)", "16K window size", "Fill-in-the-Blank (FIM) task"],
+  "benchmarks": [],
+  "summary": "DeepSeek Coder 系列的 33B 指令模型，由 deepseek-coder-33b-base 用 2B tokens 指令数据微调而来，面向对话式代码生成；系列整体在 2T tokens（87% 代码）上从零训练并支持 16K 窗口。",
+  "evidence": "deepseek-coder-33b-instruct is a 33B parameter model initialized from deepseek-coder-33b-base and fine-tuned on 2B tokens of instruction data. | Each model is pre-trained on project-level code corpus by employing a window size of 16K and a extra fill-in-the-blank task"
+},
+{
+  "repo": "deepseek-ai/deepseek-llm-7b-base",
+  "total_params": "7B",
+  "activated_params": None,
+  "context_length": None,
+  "license": "DeepSeek License",
+  "key_innovations": ["Trained from scratch on 2 trillion tokens (English and Chinese)", "Multi-Head Attention", "Released open source for research together with 67B base/chat"],
+  "benchmarks": [],
+  "summary": "DeepSeek 初代通用 LLM 的 7B base 版本，从零训练于 2T 中英 tokens，与 67B base/chat 一同开源以推动研究；卡片没有评测数字。",
+  "evidence": "`deepseek-llm-7b-base` is a 7B parameter model with Multi-Head Attention trained on 2 trillion tokens from scratch."
+},
+{
+  "repo": "deepseek-ai/deepseek-llm-67b-chat",
+  "total_params": "67B",
+  "activated_params": None,
+  "context_length": None,
+  "license": "DeepSeek License",
+  "key_innovations": ["Chat model fine-tuned on extra instruction data", "Initialized from deepseek-llm-67b-base", "Trained from scratch on 2 trillion tokens (English and Chinese)", "Chat template without system prompt"],
+  "benchmarks": [],
+  "summary": "DeepSeek 初代通用 LLM 的 67B 对话模型，在 deepseek-llm-67b-base 上追加指令数据微调；该版本不支持 system prompt，卡片也没有评测数字。",
+  "evidence": "`deepseek-llm-67b-chat` is a 67B parameter model initialized from `deepseek-llm-67b-base` and fine-tuned on extra instruction data."
+},
+{
+  "repo": "deepseek-ai/deepseek-moe-16b-base",
+  "total_params": "16B",
+  "activated_params": None,
+  "context_length": None,
+  "license": "DeepSeek License",
+  "key_innovations": ["DeepSeekMoE", "Mixture-of-Experts (MoE)"],
+  "benchmarks": [],
+  "summary": "DeepSeekMoE 的首个开源 MoE 模型卡片（论文 arXiv:2401.06066），但正文只有使用示例，没有参数描述行与任何评测数字。",
+  "evidence": "model_name = \"deepseek-ai/deepseek-moe-16b-base\" || [README 无参数描述行、无评测表；16B 取自卡片中的模型 id 字符串]"
+},
+{
+  "repo": "deepseek-ai/deepseek-coder-7b-instruct-v1.5",
+  "total_params": "7B",
+  "activated_params": None,
+  "context_length": "4K",
+  "license": "DeepSeek License",
+  "key_innovations": ["Continued pre-training of DeepSeek-LLM 7B on 2T tokens", "4K window size", "Next token prediction objective", "Fine-tuned on 2B tokens of instruction data"],
+  "benchmarks": [],
+  "summary": "由 DeepSeek-LLM 7B 继续预训练（2T tokens、4K 窗口、next token prediction）再做指令微调（2B tokens）得到的 7B 代码指令模型；评测结果在卡片里只有一张图片，没有可提取的分数。",
+  "evidence": "Deepseek-Coder-7B-Instruct-v1.5 is continue pre-trained from Deepseek-LLM 7B on 2T tokens by employing a window size of 4K and next token prediction objective, and then fine-tuned on 2B tokens of instruction data."
+},
+{
+  "repo": "deepseek-ai/deepseek-math-7b-instruct",
+  "total_params": "7B",
+  "activated_params": None,
+  "context_length": None,
+  "license": "DeepSeek License",
+  "key_innovations": ["Chain-of-Thought (CoT) prompting", "DeepSeekMath-Instruct", "DeepSeekMath-RL"],
+  "benchmarks": [],
+  "summary": "DeepSeekMath 的 7B 指令模型，专攻数学推理，官方要求用逐步推理（CoT）提示并把最终答案放进 \\boxed{}；卡片未列出任何评测数值。",
+  "evidence": "model_name = \"deepseek-ai/deepseek-math-7b-instruct\" || [README 无参数描述行、无评测表；7B 取自卡片中的模型 id 字符串]"
+},
+{
+  "repo": "deepseek-ai/deepseek-vl-7b-chat",
+  "total_params": "7B",
+  "activated_params": None,
+  "context_length": None,
+  "license": "DeepSeek Model License",
+  "key_innovations": ["SigLIP-L + SAM-B hybrid vision encoder", "1024 x 1024 image input", "Trained on around 400B vision-language tokens", "Built on DeepSeek-LLM-7b-base"],
+  "benchmarks": [],
+  "summary": "DeepSeek 首个开源视觉语言模型：用 SigLIP-L 与 SAM-B 组成混合视觉编码器支持 1024×1024 图像输入，基于 DeepSeek-LLM-7b-base 并以约 400B 图文 token 训练；卡片未给出评测分数。",
+  "evidence": "DeepSeek-VL-7b-base uses the [SigLIP-L](https://huggingface.co/timm/ViT-L-16-SigLIP-384) and [SAM-B](https://huggingface.co/facebook/sam-vit-base) as the hybrid vision encoder supporting 1024 x 1024 image input"
+},
+{
+  "repo": "deepseek-ai/DeepSeek-V2",
+  "total_params": "236B",
+  "activated_params": "21B",
+  "context_length": "128K",
+  "license": "DeepSeek Model License",
+  "key_innovations": ["MLA (Multi-head Latent Attention)", "DeepSeekMoE", "KV cache compression", "8.1T token pretraining", "SFT + RL"],
+  "benchmarks": [
+    {"name": "MMLU", "score": "78.5", "note": "English，DeepSeek-V2 (MoE-236B) base"},
+    {"name": "BBH", "score": "78.9", "note": "English，base"},
+    {"name": "C-Eval", "score": "81.7", "note": "Chinese，base"},
+    {"name": "CMMLU", "score": "84.0", "note": "Chinese，base"},
+    {"name": "HumanEval", "score": "48.8", "note": "Code，base"},
+    {"name": "GSM8K", "score": "79.2", "note": "Math，base"}
+  ],
+  "summary": "DeepSeek-V2 是 236B 总参数、每 token 激活 21B 的 MoE 模型，靠 MLA 与 DeepSeekMoE 把训练成本降低 42.5%、KV cache 减少 93.3%、最大生成吞吐提升到 5.76 倍；在 MMLU/C-Eval/CMMLU 等基准上明显超越 DeepSeek 67B。",
+  "evidence": "It comprises 236B total parameters, of which 21B are activated for each token. || | **MMLU** | English | 78.9 | 77.6 | 71.3 | 78.5 | | **BBH** | English | 81.0 | 78.9 | 68.7 | 78.9 | | **C-Eval** | Chinese | 67.5 | 58.6 | 66.1 | 81.7 | | **CMMLU** | Chinese | 69.3 | 60.0 | 70.8 | 84.0 |"
+}
+]
+
+# sanity checks
+for o in data:
+    ev = o["evidence"]
+    assert len(ev) <= 300, (o["repo"], len(ev))
+    assert 2 <= len(o["key_innovations"]) <= 6, o["repo"]
+    assert len(o["benchmarks"]) <= 6, o["repo"]
+
+out = D + "/extract/g1.json"
+with open(out, "w", encoding="utf-8") as f:
+    json.dump(data, f, ensure_ascii=False, indent=2)
+
+print("wrote", out, "objects:", len(data))
+for o in data:
+    print(" -", o["repo"], "| params:", o["total_params"], "| act:", o["activated_params"], "| ctx:", o["context_length"], "| bench:", len(o["benchmarks"]), "| ev_len:", len(o["evidence"]))

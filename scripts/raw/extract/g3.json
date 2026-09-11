@@ -1,0 +1,509 @@
+[
+  {
+    "repo": "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B",
+    "total_params": "32B",
+    "activated_params": null,
+    "context_length": null,
+    "license": "MIT",
+    "key_innovations": [
+      "Reasoning distillation: fine-tuned on 800k samples curated with DeepSeek-R1",
+      "Large-scale reinforcement learning (RL) without SFT as a preliminary step (DeepSeek-R1-Zero)",
+      "Cold-start data before RL (DeepSeek-R1 pipeline: 2 RL stages + 2 SFT stages)",
+      "Dense 32B model outperforms OpenAI-o1-mini / achieves SOTA for dense models"
+    ],
+    "benchmarks": [
+      {
+        "name": "AIME 2024 (pass@1)",
+        "score": "72.6",
+        "note": "AIME 2024 cons@64 83.3"
+      },
+      {
+        "name": "MATH-500 (pass@1)",
+        "score": "94.3",
+        "note": null
+      },
+      {
+        "name": "GPQA Diamond (pass@1)",
+        "score": "62.1",
+        "note": null
+      },
+      {
+        "name": "LiveCodeBench (pass@1)",
+        "score": "57.2",
+        "note": null
+      },
+      {
+        "name": "CodeForces (rating)",
+        "score": "1691",
+        "note": null
+      }
+    ],
+    "summary": "该 README 实为 DeepSeek-R1 系列总卡片（DeepSeek-R1-Distill-Qwen-32B 是其中基于 Qwen2.5-32B 的蒸馏模型）。蒸馏版用 DeepSeek-R1 生成的数据（800k 样本）微调，32B 稠密模型在多项基准上超过 OpenAI-o1-mini。",
+    "evidence": "We open-source distilled 1.5B, 7B, 8B, 14B, 32B, and 70B checkpoints\n| DeepSeek-R1-Distill-Qwen-32B        | **72.6**         | 83.3              | 94.3            | 62.1                 | 57.2                 | 1691              |"
+  },
+  {
+    "repo": "deepseek-ai/Janus-Pro-7B",
+    "total_params": null,
+    "activated_params": null,
+    "context_length": null,
+    "license": "MIT (code) / DeepSeek Model License (model)",
+    "key_innovations": [
+      "Decoupled visual encoding into separate pathways for multimodal understanding and generation",
+      "Single unified autoregressive transformer handling both understanding and generation",
+      "SigLIP-L vision encoder supporting 384 x 384 image input",
+      "Image generation tokenizer with a downsample rate of 16"
+    ],
+    "benchmarks": [],
+    "summary": "Janus-Pro 把视觉编码解耦为理解与生成两条独立路径，同时仍使用单一统一 Transformer，缓解了同一视觉编码器在两类任务间的冲突。它是 DeepSeek 的统一多模态模型，7B 版基于 DeepSeek-LLM-7b-base 构建。",
+    "evidence": "Janus-Pro is a unified understanding and generation MLLM, which decouples visual encoding for multimodal understanding and generation. \nJanus-Pro is constructed based on the DeepSeek-LLM-1.5b-base/DeepSeek-LLM-7b-base."
+  },
+  {
+    "repo": "deepseek-ai/DeepSeek-V3-0324",
+    "total_params": null,
+    "activated_params": null,
+    "context_length": null,
+    "license": "MIT",
+    "key_innovations": [
+      "Reasoning gains without architecture change (model structure exactly the same as DeepSeek-V3)",
+      "Front-end web development: more executable code and better-looking pages",
+      "Chinese writing aligned with the R1 writing style, better medium-to-long-form writing",
+      "Function calling accuracy improvements and enhanced Chinese search",
+      "API temperature mapping T_model = T_api * 0.3 (T_api <= 1)"
+    ],
+    "benchmarks": [
+      {
+        "name": "MMLU-Pro",
+        "score": "81.2",
+        "note": "up from 75.9 (+5.3)"
+      },
+      {
+        "name": "GPQA",
+        "score": "68.4",
+        "note": "up from 59.1 (+9.3)"
+      },
+      {
+        "name": "AIME",
+        "score": "59.4",
+        "note": "up from 39.6 (+19.8)"
+      },
+      {
+        "name": "LiveCodeBench",
+        "score": "49.2",
+        "note": "up from 39.2 (+10.0)"
+      }
+    ],
+    "summary": "DeepSeek-V3-0324 是 DeepSeek-V3 的小版本升级，模型结构完全不变，但推理、前端网页开发、中文写作与函数调用能力明显增强。MMLU-Pro、GPQA、AIME、LiveCodeBench 四个基准分别提升 5.3 / 9.3 / 19.8 / 10.0 分。",
+    "evidence": "DeepSeek-V3-0324 demonstrates notable improvements over its predecessor, DeepSeek-V3, in several key aspects.\n  - MMLU-Pro: 75.9 → 81.2 (+5.3)\n  - GPQA: 59.1 → 68.4 (+9.3)\n  - AIME: 39.6 → 59.4 (+19.8)\n  - LiveCodeBench: 39.2 → 49.2 (+10.0)"
+  },
+  {
+    "repo": "deepseek-ai/DeepSeek-Prover-V2-671B",
+    "total_params": "671B",
+    "activated_params": null,
+    "context_length": null,
+    "license": "DeepSeek Model License",
+    "key_innovations": [
+      "Recursive theorem proving pipeline powered by DeepSeek-V3 (subgoal decomposition + Lean 4 formalization)",
+      "Synthetic cold-start data pairing complete formal proof with DeepSeek-V3 chain-of-thought",
+      "Reinforcement learning with binary correct-or-incorrect reward feedback",
+      "7B subgoal prover used to reduce proof-search compute",
+      "ProverBench: 325 formalized AIME / textbook problems"
+    ],
+    "benchmarks": [
+      {
+        "name": "MiniF2F-test (pass ratio)",
+        "score": "88.9%",
+        "note": "state-of-the-art in neural theorem proving"
+      },
+      {
+        "name": "PutnamBench",
+        "score": "49 out of 658 problems solved",
+        "note": null
+      }
+    ],
+    "summary": "DeepSeek-Prover-V2-671B 面向 Lean 4 形式化定理证明：用 DeepSeek-V3 递归分解子目标并把形式化证明与 CoT 合成为冷启动数据，再用二元对错反馈做强化学习。它在 MiniF2F-test 达到 88.9% 通过率，并解出 PutnamBench 658 题中的 49 题。",
+    "evidence": "We release DeepSeek-Prover-V2 in two model sizes: 7B and 671B parameters.\nreaching $88.9$% pass ratio on the MiniF2F-test and solving 49 out of 658 problems from PutnamBench"
+  },
+  {
+    "repo": "deepseek-ai/DeepSeek-R1-0528",
+    "total_params": null,
+    "activated_params": null,
+    "context_length": null,
+    "license": "MIT",
+    "key_innovations": [
+      "Increased thinking depth via more post-training compute (12K -> 23K tokens per AIME question)",
+      "Algorithmic optimization mechanisms during post-training",
+      "Reduced hallucination rate",
+      "Enhanced function calling / tools (BFCL_v3_MultiTurn, Tau-Bench)",
+      "System prompt is supported now; no need to force '\\<think\\>\\n' prefix"
+    ],
+    "benchmarks": [
+      {
+        "name": "MMLU-Redux (EM)",
+        "score": "93.4",
+        "note": "DeepSeek R1: 92.9"
+      },
+      {
+        "name": "MMLU-Pro (EM)",
+        "score": "85.0",
+        "note": "DeepSeek R1: 84.0"
+      },
+      {
+        "name": "GPQA-Diamond (Pass@1)",
+        "score": "81.0",
+        "note": "DeepSeek R1: 71.5"
+      },
+      {
+        "name": "SimpleQA (Correct)",
+        "score": "27.8",
+        "note": "DeepSeek R1: 30.1"
+      },
+      {
+        "name": "FRAMES (Acc.)",
+        "score": "83.0",
+        "note": "DeepSeek R1: 82.5"
+      },
+      {
+        "name": "Humanity's Last Exam (Pass@1)",
+        "score": "17.7",
+        "note": "DeepSeek R1: 8.5; text-only subset"
+      },
+      {
+        "name": "LiveCodeBench (2408-2505) (Pass@1)",
+        "score": "73.3",
+        "note": "DeepSeek R1: 63.5"
+      },
+      {
+        "name": "Codeforces-Div1 (Rating)",
+        "score": "1930",
+        "note": "DeepSeek R1: 1530"
+      },
+      {
+        "name": "SWE Verified (Resolved)",
+        "score": "57.6",
+        "note": "DeepSeek R1: 49.2; Agentless framework"
+      },
+      {
+        "name": "Aider-Polyglot (Acc.)",
+        "score": "71.6",
+        "note": "DeepSeek R1: 53.3"
+      },
+      {
+        "name": "AIME 2024 (Pass@1)",
+        "score": "91.4",
+        "note": "DeepSeek R1: 79.8"
+      },
+      {
+        "name": "AIME 2025 (Pass@1)",
+        "score": "87.5",
+        "note": "DeepSeek R1: 70.0"
+      },
+      {
+        "name": "HMMT 2025 (Pass@1)",
+        "score": "79.4",
+        "note": "DeepSeek R1: 41.7"
+      },
+      {
+        "name": "CNMO 2024 (Pass@1)",
+        "score": "86.9",
+        "note": "DeepSeek R1: 78.8"
+      },
+      {
+        "name": "BFCL_v3_MultiTurn (Acc)",
+        "score": "37.0",
+        "note": null
+      },
+      {
+        "name": "Tau-Bench (Pass@1)",
+        "score": "53.5(Airline)/63.9(Retail)",
+        "note": "GPT-4.1 acts as user role"
+      }
+    ],
+    "summary": "DeepSeek-R1 的小版本升级：通过增加后训练算力与算法优化显著提升推理深度，AIME 2025 准确率从 70% 升至 87.5%，单题平均思考 token 从 12K 增至 23K。同时降低幻觉率、增强函数调用，并开始支持 system prompt。",
+    "evidence": "in the AIME 2025 test, the model’s accuracy has increased from 70% in the previous version to 87.5% in the current version\n|          | AIME 2025 (Pass@1)                     | 70.0           | 87.5"
+  },
+  {
+    "repo": "deepseek-ai/DeepSeek-V3.1",
+    "total_params": "671B",
+    "activated_params": "37B",
+    "context_length": "128K",
+    "license": "MIT",
+    "key_innovations": [
+      "Hybrid thinking mode: one model supports thinking mode and non-thinking mode by changing the chat template",
+      "UE8M0 FP8 scale data format on both model weights and activations (microscaling, DeepGEMM)",
+      "Two-phase long context extension: 32K phase 10x to 630B tokens, 128K phase 3.3x to 209B tokens",
+      "Smarter tool calling / agent tasks (Code-Agent, Search-Agent formats)",
+      "Thinking efficiency: DeepSeek-V3.1-Think answers comparable to DeepSeek-R1-0528, but faster"
+    ],
+    "benchmarks": [
+      {
+        "name": "MMLU-Redux (EM)",
+        "score": "93.7",
+        "note": "V3.1-Thinking; NonThinking 91.8, V3-0324 90.5, R1-0528 93.4"
+      },
+      {
+        "name": "MMLU-Pro (EM)",
+        "score": "84.8",
+        "note": "V3.1-Thinking; NonThinking 83.7, V3-0324 81.2, R1-0528 85.0"
+      },
+      {
+        "name": "GPQA-Diamond (Pass@1)",
+        "score": "80.1",
+        "note": "V3.1-Thinking; NonThinking 74.9, V3-0324 68.4, R1-0528 81.0"
+      },
+      {
+        "name": "Humanity's Last Exam (Pass@1)",
+        "score": "15.9",
+        "note": "V3.1-Thinking; R1-0528 17.7"
+      },
+      {
+        "name": "BrowseComp",
+        "score": "30.0",
+        "note": "V3.1-Thinking; R1-0528 8.9; internal search framework"
+      },
+      {
+        "name": "BrowseComp_zh",
+        "score": "49.2",
+        "note": "V3.1-Thinking; R1-0528 35.7"
+      },
+      {
+        "name": "Humanity's Last Exam (Python + Search)",
+        "score": "29.8",
+        "note": "V3.1-Thinking; R1-0528 24.8"
+      },
+      {
+        "name": "SimpleQA",
+        "score": "93.4",
+        "note": "V3.1-Thinking; R1-0528 92.3"
+      },
+      {
+        "name": "LiveCodeBench (2408-2505) (Pass@1)",
+        "score": "74.8",
+        "note": "V3.1-Thinking; NonThinking 56.4, V3-0324 43.0, R1-0528 73.3"
+      },
+      {
+        "name": "Codeforces-Div1 (Rating)",
+        "score": "2091",
+        "note": "V3.1-Thinking; R1-0528 1930"
+      },
+      {
+        "name": "Aider-Polyglot (Acc.)",
+        "score": "76.3",
+        "note": "V3.1-Thinking; NonThinking 68.4, V3-0324 55.1, R1-0528 71.6"
+      },
+      {
+        "name": "SWE Verified (Agent mode)",
+        "score": "66.0",
+        "note": "V3.1-NonThinking; V3-0324 45.4, R1-0528 44.6; internal code agent framework"
+      },
+      {
+        "name": "SWE-bench Multilingual (Agent mode)",
+        "score": "54.5",
+        "note": "V3.1-NonThinking; V3-0324 29.3, R1-0528 30.5"
+      },
+      {
+        "name": "Terminal-bench (Terminus 1 framework)",
+        "score": "31.3",
+        "note": "V3.1-NonThinking; V3-0324 13.3, R1-0528 5.7"
+      },
+      {
+        "name": "AIME 2024 (Pass@1)",
+        "score": "93.1",
+        "note": "V3.1-Thinking; NonThinking 66.3, V3-0324 59.4, R1-0528 91.4"
+      },
+      {
+        "name": "AIME 2025 (Pass@1)",
+        "score": "88.4",
+        "note": "V3.1-Thinking; NonThinking 49.8, V3-0324 51.3, R1-0528 87.5"
+      },
+      {
+        "name": "HMMT 2025 (Pass@1)",
+        "score": "84.2",
+        "note": "V3.1-Thinking; NonThinking 33.5, V3-0324 29.2, R1-0528 79.4"
+      }
+    ],
+    "summary": "DeepSeek-V3.1 是混合推理模型：一份权重通过切换 chat template 同时支持 thinking mode 与 non-thinking mode，工具调用与 agent 能力显著增强。它还用 UE8M0 FP8 scale 格式训练权重与激活，以适配 microscaling 数据格式。",
+    "evidence": "| DeepSeek-V3.1 | 671B | 37B | 128K | [HuggingFace](https://huggingface.co/deepseek-ai/DeepSeek-V3.1) \\| [ModelScope](https://modelscope.cn/models/deepseek-ai/DeepSeek-V3.1) |\n|          | LiveCodeBench (2408-2505) (Pass@1)     | 56.4    | 43.0    | 74.8          | 73.3"
+  },
+  {
+    "repo": "deepseek-ai/DeepSeek-V3.1-Terminus",
+    "total_params": null,
+    "activated_params": null,
+    "context_length": null,
+    "license": "MIT",
+    "key_innovations": [
+      "Language consistency: fewer instances of mixed Chinese-English text and abnormal characters",
+      "Agent capabilities: further optimized Code Agent and Search Agent",
+      "Updated search agent template and tool-set",
+      "Keeps original model structure of DeepSeek-V3.1"
+    ],
+    "benchmarks": [
+      {
+        "name": "MMLU-Pro",
+        "score": "85.0",
+        "note": "DeepSeek-V3.1: 84.8"
+      },
+      {
+        "name": "GPQA-Diamond",
+        "score": "80.7",
+        "note": "DeepSeek-V3.1: 80.1"
+      },
+      {
+        "name": "Humanity's Last Exam",
+        "score": "21.7",
+        "note": "DeepSeek-V3.1: 15.9"
+      },
+      {
+        "name": "LiveCodeBench",
+        "score": "74.9",
+        "note": "DeepSeek-V3.1: 74.8"
+      },
+      {
+        "name": "Codeforces",
+        "score": "2046",
+        "note": "DeepSeek-V3.1: 2091"
+      },
+      {
+        "name": "Aider-Polyglot",
+        "score": "76.1",
+        "note": "DeepSeek-V3.1: 76.3"
+      },
+      {
+        "name": "BrowseComp",
+        "score": "38.5",
+        "note": "DeepSeek-V3.1: 30.0"
+      },
+      {
+        "name": "BrowseComp-zh",
+        "score": "45.0",
+        "note": "DeepSeek-V3.1: 49.2"
+      },
+      {
+        "name": "SimpleQA",
+        "score": "96.8",
+        "note": "DeepSeek-V3.1: 93.4"
+      },
+      {
+        "name": "SWE Verified",
+        "score": "68.4",
+        "note": "DeepSeek-V3.1: 66.0"
+      },
+      {
+        "name": "SWE-bench Multilingual",
+        "score": "57.8",
+        "note": "DeepSeek-V3.1: 54.5"
+      },
+      {
+        "name": "Terminal-bench",
+        "score": "36.7",
+        "note": "DeepSeek-V3.1: 31.3"
+      }
+    ],
+    "summary": "V3.1-Terminus 是针对用户反馈的修复版：保持原有能力的同时减少中英混输与异常字符，并进一步优化 Code Agent 与 Search Agent（HLE 15.9→21.7、BrowseComp 30.0→38.5、SimpleQA 93.4→96.8）。",
+    "evidence": "| MMLU-Pro | 84.8 | 85.0 |\n| GPQA-Diamond | 80.1 | 80.7 |\n| Humanity's Last Exam | 15.9 | 21.7 |\n| LiveCodeBench | 74.8 | 74.9 |\n| BrowseComp | 30.0 | 38.5 |\n| SimpleQA | 93.4 | 96.8 |\n| SWE Verified | 66.0 | 68.4 |"
+  },
+  {
+    "repo": "deepseek-ai/DeepSeek-V3.2-Exp",
+    "total_params": null,
+    "activated_params": null,
+    "context_length": null,
+    "license": "MIT",
+    "key_innovations": [
+      "DeepSeek Sparse Attention (DSA): fine-grained sparse attention for long-context efficiency",
+      "Training configurations deliberately aligned with V3.1-Terminus to isolate the effect of sparse attention",
+      "Improves long-context training and inference efficiency while maintaining virtually identical output quality",
+      "Open-source kernels: TileLang examples, DeepGEMM indexer logit kernels, FlashMLA sparse attention kernels",
+      "Indexer RoPE layout fix (non-interleaved vs interleaved) announced 2025.11.17"
+    ],
+    "benchmarks": [
+      {
+        "name": "MMLU-Pro",
+        "score": "85.0",
+        "note": "V3.1-Terminus: 85.0"
+      },
+      {
+        "name": "GPQA-Diamond",
+        "score": "79.9",
+        "note": "V3.1-Terminus: 80.7"
+      },
+      {
+        "name": "Humanity's Last Exam",
+        "score": "19.8",
+        "note": "V3.1-Terminus: 21.7"
+      },
+      {
+        "name": "LiveCodeBench",
+        "score": "74.1",
+        "note": "V3.1-Terminus: 74.9"
+      },
+      {
+        "name": "AIME 2025",
+        "score": "89.3",
+        "note": "V3.1-Terminus: 88.4"
+      },
+      {
+        "name": "HMMT 2025",
+        "score": "83.6",
+        "note": "V3.1-Terminus: 86.1"
+      },
+      {
+        "name": "Codeforces",
+        "score": "2121",
+        "note": "V3.1-Terminus: 2046"
+      },
+      {
+        "name": "Aider-Polyglot",
+        "score": "74.5",
+        "note": "V3.1-Terminus: 76.1"
+      },
+      {
+        "name": "BrowseComp",
+        "score": "40.1",
+        "note": "V3.1-Terminus: 38.5"
+      },
+      {
+        "name": "BrowseComp-zh",
+        "score": "47.9",
+        "note": "V3.1-Terminus: 45.0"
+      },
+      {
+        "name": "SimpleQA",
+        "score": "97.1",
+        "note": "V3.1-Terminus: 96.8"
+      },
+      {
+        "name": "SWE Verified",
+        "score": "67.8",
+        "note": "V3.1-Terminus: 68.4"
+      },
+      {
+        "name": "SWE-bench Multilingual",
+        "score": "57.9",
+        "note": "V3.1-Terminus: 57.8"
+      },
+      {
+        "name": "Terminal-bench",
+        "score": "37.7",
+        "note": "V3.1-Terminus: 36.7"
+      }
+    ],
+    "summary": "DeepSeek-V3.2-Exp 是通往下一代架构的中间实验版本，首次引入 DeepSeek Sparse Attention (DSA) 实现细粒度稀疏注意力，在几乎不损失输出质量的前提下大幅提升长文本训练与推理效率。为公平评估，其训练配置刻意与 V3.1-Terminus 对齐，各公开基准表现基本持平。",
+    "evidence": "DeepSeek Sparse Attention—a sparse attention mechanism designed to explore and validate optimizations for training and inference efficiency in long-context scenarios\n| MMLU-Pro | 85.0 | 85.0 |\n| GPQA-Diamond | 80.7 | 79.9 |"
+  },
+  {
+    "repo": "deepseek-ai/DeepSeek-OCR",
+    "total_params": null,
+    "activated_params": null,
+    "context_length": null,
+    "license": "MIT",
+    "key_innovations": [
+      "Contexts Optical Compression: compressing text context through visual tokens",
+      "Vision-language OCR model with <|grounding|> prompt for document-to-Markdown conversion",
+      "Multiple resolution modes: Tiny, Small, Base, Large, Gundam (crop_mode)",
+      "NGramPerReqLogitsProcessor with ngram_size=30 / window_size=90 for repetition control",
+      "Officially supported in upstream vLLM (2025/10/23)"
+    ],
+    "benchmarks": [],
+    "summary": "DeepSeek-OCR 提出 Contexts Optical Compression（上下文光学压缩），探索用视觉 token 压缩文本上下文的边界，支持 grounding 转 Markdown 与多种分辨率模式，并已获 vLLM 官方支持。README 未给出参数量与基准分数。",
+    "evidence": "  <a href=\"https://huggingface.co/papers/2510.18234\">DeepSeek-OCR: Contexts Optical Compression</a>\n<a href=\"https://huggingface.co/papers/2510.18234\">Explore the boundaries of visual-text compression.</a>       "
+  }
+]

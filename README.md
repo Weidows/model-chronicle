@@ -4,7 +4,7 @@
 
 首卷：**DeepSeek（2023.10 → 2026.09，31 个节点）**。
 
-在线预览：<https://weidows.github.io/model-chronicle/>
+在线预览：<https://blog.weidows.tech/model-chronicle/>（GitHub Pages；<https://weidows.github.io/model-chronicle/> 会 301 到同一地址）
 
 ## 它长什么样
 

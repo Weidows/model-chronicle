@@ -6,6 +6,11 @@
 
 在线预览：<https://blog.weidows.tech/model-chronicle/>（GitHub Pages；<https://weidows.github.io/model-chronicle/> 会 301 到同一地址）
 
+![头部](docs/screenshots/hero.png)
+![时间轴](docs/screenshots/timeline.png)
+![数据面板](docs/screenshots/data.png)
+![版本档案](docs/screenshots/archive.png)
+
 ## 它长什么样
 
 - **星图式滚动时间轴**：竖向滚动驱动横向平移，时间轴是一条发光光束，节点是带轨道的球；

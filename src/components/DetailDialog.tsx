@@ -90,7 +90,11 @@ function Dossier({ release }: { release: Release }) {
       </header>
 
       <div className="grid gap-px bg-edge/60 sm:grid-cols-2">
-        <Metric label="总参数" value={release.totalParams ?? '未公开'} icon={<Layers className="size-3.5" />} />
+        <Metric
+          label={release.paramsSource === 'inferred' ? '总参数 · 家族推定' : '总参数'}
+          value={release.totalParams ?? '未公开'}
+          icon={<Layers className="size-3.5" />}
+        />
         <Metric
           label="激活参数"
           value={release.activatedParams ?? '稠密'}
@@ -103,6 +107,12 @@ function Dossier({ release }: { release: Release }) {
           icon={<Download className="size-3.5" />}
         />
       </div>
+
+      {release.paramsSource === 'inferred' ? (
+        <p className="border-t border-edge/40 px-6 py-2 text-[11px] leading-relaxed text-fog/60 sm:px-8">
+          该版本模型卡未单独标注参数量，此处按同代基座推定；其余数值均逐字取自官方模型卡。
+        </p>
+      ) : null}
 
       {release.breakthrough ? (
         <div className="border-t border-edge/60 bg-amber/6 px-6 py-4 sm:px-8">

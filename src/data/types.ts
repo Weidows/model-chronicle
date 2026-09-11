@@ -29,6 +29,8 @@ export interface Release {
   tier: Tier
   /** Human strings exactly as the model card states them. */
   totalParams: string | null
+  /** "card" = printed on the model card; "inferred" = taken from the same-generation backbone. */
+  paramsSource: 'card' | 'inferred' | null
   activatedParams: string | null
   contextLength: string | null
   license: string | null

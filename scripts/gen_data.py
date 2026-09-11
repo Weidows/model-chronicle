@@ -427,6 +427,19 @@ def main() -> None:
         },
     }
 
+    # Cards that never print a parameter count: numbers come from the same-generation
+    # backbone. Flagged in the UI instead of silently passing as card-stated facts.
+    INFERRED = {
+        "DeepSeek-V2.5",
+        "deepseek-vl2",
+        "Janus-Pro-7B",
+        "DeepSeek-V3-0324",
+        "DeepSeek-R1-0528",
+        "DeepSeek-V3.1-Terminus",
+        "DeepSeek-V3.2-Exp",
+        "DeepSeek-Math-V2",
+    }
+
     # breakthroughs live in their own curated list, keyed to a release id when relevant
     for repo_key, ov in OVERLAY.items():
         repo = f"deepseek-ai/{repo_key}"
@@ -483,6 +496,9 @@ def main() -> None:
         label_lic = ov.get("licenseLabel") or lab.get("lic") or norm_license(lic)
         if label_ctx:
             label_ctx = re.sub(r"(?<=\d)k\b", "K", label_ctx)
+        params_source = (
+            "inferred" if (label_params and repo_key in INFERRED) else ("card" if label_params else None)
+        )
 
         # headline metric for the cross-generation curve
         headline = None
@@ -506,6 +522,7 @@ def main() -> None:
                 "date": (m.get("createdAt") or "")[:10] or "2024-01-01",
                 "tier": ov["tier"],
                 "totalParams": label_params,
+                "paramsSource": params_source,
                 "activatedParams": label_active,
                 "contextLength": label_ctx,
                 "license": label_lic,

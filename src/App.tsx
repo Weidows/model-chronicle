@@ -24,13 +24,17 @@ export default function App() {
   const [active, setActive] = useState<Set<string>>(() => new Set(ALL_ORGS))
   const dataset = useMemo(() => buildDataset(active), [active])
 
-  const toggleOrg = (id: string) =>
+  /** Click isolates a lab, Shift/Cmd-click composes a subset, clicking the solo
+   *  lab again goes back to every lab. Predictable beats clever here. */
+  const chooseOrg = (id: string, additive = false) =>
     setActive((prev) => {
-      const next = new Set(prev)
-      if (next.has(id)) next.delete(id)
-      else next.add(id)
-      // never leave the page with nothing to draw
-      return next.size ? next : new Set(ALL_ORGS)
+      if (additive) {
+        const next = new Set(prev)
+        if (next.has(id)) next.delete(id)
+        else next.add(id)
+        return next.size ? next : new Set(ALL_ORGS)
+      }
+      return prev.size === 1 && prev.has(id) ? new Set(ALL_ORGS) : new Set([id])
     })
 
   return (
@@ -72,8 +76,8 @@ export default function App() {
               return (
                 <button
                   key={o.id}
-                  onClick={() => toggleOrg(o.id)}
-                  title={o.blurb}
+                  onClick={(e) => chooseOrg(o.id, e.shiftKey || e.metaKey || e.ctrlKey)}
+                  title={`${o.name} — ${o.blurb}（Shift 多选，再点一次回到全部）`}
                   aria-pressed={on}
                   className={cn(
                     'inline-flex shrink-0 items-center gap-1.5 rounded-sm border px-2.5 py-1.5 font-mono text-[10px] tracking-wider whitespace-nowrap transition',
@@ -133,7 +137,7 @@ export default function App() {
           data={dataset}
           orgs={ORGS}
           activeOrgs={active}
-          onToggleOrg={toggleOrg}
+          onChooseOrg={chooseOrg}
           showOrg={dataset.org === 'combined'}
         />
         <TechRibbon data={dataset} />

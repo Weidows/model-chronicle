@@ -15,7 +15,7 @@ export const dataset: Dataset = {
       "family": "LLM",
       "date": "2023-03-13",
       "tier": "flagship",
-      "totalParams": "62 亿（6.2 billion parameters）",
+      "totalParams": "62 亿",
       "paramsSource": "card",
       "activatedParams": null,
       "contextLength": null,
@@ -47,7 +47,7 @@ export const dataset: Dataset = {
       "family": "LLM",
       "date": "2023-06-24",
       "tier": "flagship",
-      "totalParams": "6B（模型名写法）",
+      "totalParams": "6B",
       "paramsSource": "card",
       "activatedParams": null,
       "contextLength": "32K（对话阶段按 8K 训练）",
@@ -56,7 +56,7 @@ export const dataset: Dataset = {
       "likes": 2056,
       "storageBytes": 49949968758,
       "storageLabel": "49.9 GB",
-      "paramsB": null,
+      "paramsB": 6.0,
       "activeB": null,
       "innovations": [
         "FlashAttention",
@@ -113,7 +113,7 @@ export const dataset: Dataset = {
       "family": "Coder",
       "date": "2023-07-19",
       "tier": "major",
-      "totalParams": "60 亿（6B parameters）",
+      "totalParams": "60 亿",
       "paramsSource": "card",
       "activatedParams": null,
       "contextLength": "8192（最大序列长度）",
@@ -199,7 +199,7 @@ export const dataset: Dataset = {
       "family": "LLM",
       "date": "2023-10-25",
       "tier": "flagship",
-      "totalParams": "6B（模型名写法）",
+      "totalParams": "6B",
       "paramsSource": "card",
       "activatedParams": null,
       "contextLength": null,
@@ -208,7 +208,7 @@ export const dataset: Dataset = {
       "likes": 1166,
       "storageBytes": 37462649896,
       "storageLabel": "37.5 GB",
-      "paramsB": null,
+      "paramsB": 6.0,
       "activeB": null,
       "innovations": [
         "全新设计的 Prompt 格式",
@@ -234,7 +234,7 @@ export const dataset: Dataset = {
       "family": "VL",
       "date": "2023-11-16",
       "tier": "major",
-      "totalParams": "17B（100 亿视觉参数 + 70 亿语言参数）",
+      "totalParams": "17B",
       "paramsSource": "card",
       "activatedParams": null,
       "contextLength": null,
@@ -243,7 +243,7 @@ export const dataset: Dataset = {
       "likes": 199,
       "storageBytes": 70559058896,
       "storageLabel": "70.6 GB",
-      "paramsB": null,
+      "paramsB": 17.0,
       "activeB": null,
       "innovations": [
         "视觉专家模块（Visual Expert）",
@@ -265,7 +265,7 @@ export const dataset: Dataset = {
       "family": "Agent",
       "date": "2023-12-15",
       "tier": "major",
-      "totalParams": "18B（11B 视觉 + 7B 语言参数）",
+      "totalParams": "18B",
       "paramsSource": "card",
       "activatedParams": null,
       "contextLength": null,
@@ -274,7 +274,7 @@ export const dataset: Dataset = {
       "likes": 68,
       "storageBytes": 66442208168,
       "storageLabel": "66.4 GB",
-      "paramsB": null,
+      "paramsB": 18.0,
       "activeB": null,
       "innovations": [
         "高分辨率视觉输入 1120x1120",
@@ -392,7 +392,7 @@ export const dataset: Dataset = {
       "family": "LLM",
       "date": "2024-06-04",
       "tier": "flagship",
-      "totalParams": "9B（模型名写法）",
+      "totalParams": "9B",
       "paramsSource": "card",
       "activatedParams": null,
       "contextLength": "128K（另有支持 1M 上下文的版本）",
@@ -401,7 +401,7 @@ export const dataset: Dataset = {
       "likes": 708,
       "storageBytes": 56422422209,
       "storageLabel": "56.4 GB",
-      "paramsB": null,
+      "paramsB": 9.0,
       "activeB": null,
       "innovations": [
         "128K 上下文",
@@ -545,7 +545,7 @@ export const dataset: Dataset = {
       "family": "VL",
       "date": "2024-06-04",
       "tier": "major",
-      "totalParams": "9B（模型名写法）",
+      "totalParams": "9B",
       "paramsSource": "card",
       "activatedParams": null,
       "contextLength": "8K",
@@ -554,7 +554,7 @@ export const dataset: Dataset = {
       "likes": 268,
       "storageBytes": 27815409466,
       "storageLabel": "27.8 GB",
-      "paramsB": null,
+      "paramsB": 9.0,
       "activeB": null,
       "innovations": [
         "1120 * 1120 高分辨率输入",
@@ -635,7 +635,7 @@ export const dataset: Dataset = {
       "family": "Video",
       "date": "2024-08-05",
       "tier": "major",
-      "totalParams": "2B（模型名写法）",
+      "totalParams": "2B",
       "paramsSource": "card",
       "activatedParams": null,
       "contextLength": null,
@@ -644,7 +644,7 @@ export const dataset: Dataset = {
       "likes": 371,
       "storageBytes": 14206699570,
       "storageLabel": "14.2 GB",
-      "paramsB": null,
+      "paramsB": 2.0,
       "activeB": null,
       "innovations": [
         "Expert Transformer（论文标题）",
@@ -669,7 +669,7 @@ export const dataset: Dataset = {
       "family": "Video",
       "date": "2024-08-17",
       "tier": "flagship",
-      "totalParams": "5B（模型名写法）",
+      "totalParams": "5B",
       "paramsSource": "card",
       "activatedParams": null,
       "contextLength": null,
@@ -678,7 +678,7 @@ export const dataset: Dataset = {
       "likes": 688,
       "storageBytes": 21960222900,
       "storageLabel": "22.0 GB",
-      "paramsB": null,
+      "paramsB": 5.0,
       "activeB": null,
       "innovations": [
         "3d_rope_pos_embed 位置编码",
@@ -701,7 +701,7 @@ export const dataset: Dataset = {
       "family": "Audio",
       "date": "2024-10-24",
       "tier": "major",
-      "totalParams": "9B（模型名写法）",
+      "totalParams": "9B",
       "paramsSource": "card",
       "activatedParams": null,
       "contextLength": null,
@@ -710,7 +710,7 @@ export const dataset: Dataset = {
       "likes": 120,
       "storageBytes": 19087777498,
       "storageLabel": "19.1 GB",
-      "paramsB": null,
+      "paramsB": 9.0,
       "activeB": null,
       "innovations": [
         "端到端语音理解与生成",
@@ -733,7 +733,7 @@ export const dataset: Dataset = {
       "family": "Video",
       "date": "2024-11-02",
       "tier": "major",
-      "totalParams": "5B（模型名写法）",
+      "totalParams": "5B",
       "paramsSource": "card",
       "activatedParams": null,
       "contextLength": null,
@@ -742,7 +742,7 @@ export const dataset: Dataset = {
       "likes": 77,
       "storageBytes": 31053918980,
       "storageLabel": "31.1 GB",
-      "paramsB": null,
+      "paramsB": 5.0,
       "activeB": null,
       "innovations": [
         "分辨率提升至 1360 * 768",
@@ -768,7 +768,7 @@ export const dataset: Dataset = {
       "family": "Image",
       "date": "2025-03-03",
       "tier": "minor",
-      "totalParams": "6B（模型名写法）",
+      "totalParams": "6B",
       "paramsSource": "card",
       "activatedParams": null,
       "contextLength": null,
@@ -777,7 +777,7 @@ export const dataset: Dataset = {
       "likes": 257,
       "storageBytes": 31128922533,
       "storageLabel": "31.1 GB",
-      "paramsB": null,
+      "paramsB": 6.0,
       "activeB": null,
       "innovations": [
         "中英双语文生图（含中文文字渲染）",
@@ -954,7 +954,7 @@ export const dataset: Dataset = {
       "family": "LLM",
       "date": "2025-04-07",
       "tier": "major",
-      "totalParams": "9B（模型名写法；HF API safetensors 总计 9400279040）",
+      "totalParams": "9B",
       "paramsSource": "card",
       "activatedParams": null,
       "contextLength": null,
@@ -963,7 +963,7 @@ export const dataset: Dataset = {
       "likes": 111,
       "storageBytes": 18820584952,
       "storageLabel": "18.8 GB",
-      "paramsB": null,
+      "paramsB": 9.0,
       "activeB": null,
       "innovations": [
         "GLM-4-0414 系列 9B 稠密版本",
@@ -985,7 +985,7 @@ export const dataset: Dataset = {
       "family": "LLM",
       "date": "2025-04-07",
       "tier": "flagship",
-      "totalParams": "32B（32 billion parameters；HF API safetensors 总计 32566081536）",
+      "totalParams": "32B",
       "paramsSource": "card",
       "activatedParams": null,
       "contextLength": null,
@@ -994,7 +994,7 @@ export const dataset: Dataset = {
       "likes": 489,
       "storageBytes": 65152201576,
       "storageLabel": "65.2 GB",
-      "paramsB": null,
+      "paramsB": 32.0,
       "activeB": null,
       "innovations": [
         "15T 高质量数据预训练（含大量推理型合成数据）",
@@ -2481,7 +2481,7 @@ export const dataset: Dataset = {
       "lane": "推理",
       "mechanism": "以 62 亿参数配合 INT4 量化，把中文对话大模型拉到 6GB 显存的消费级显卡上运行。",
       "impact": "智谱开源系列的第一代中英双语对话模型，62 亿参数、GLM 架构，可在消费级显卡本地部署，是整个 ChatGLM/GLM 开源谱系的起点。",
-      "magnitude": "总参 62 亿（6.2 billion parameters）"
+      "magnitude": "总参 62 亿"
     },
     {
       "id": "glm-chatglm2-6b",
@@ -2514,7 +2514,7 @@ export const dataset: Dataset = {
       "lane": "后训练",
       "mechanism": "原生支持工具调用（Function Call）与代码执行，从纯对话模型转向可执行任务的 Agent 形态。",
       "impact": "ChatGLM 系列第三代的对话模型，最大变化是采用全新 Prompt 格式并原生支持 Function Call、Code Interpreter 与 Agent 场景，同时开源 Base 与 32K 长文本版本。",
-      "magnitude": "总参 6B（模型名写法）"
+      "magnitude": "总参 6B"
     },
     {
       "id": "glm-cogvlm-chat-hf",
@@ -2525,7 +2525,7 @@ export const dataset: Dataset = {
       "lane": "多模态",
       "mechanism": "视觉专家模块（Visual Expert）：在预训练语言模型的每一层引入视觉专家，使 VLM 效果超越或持平 PaLI-X 55B（自述）。",
       "impact": "CogVLM-17B 是开源视觉语言模型，由 10B 视觉参数与 7B 语言参数组成，在 10 个跨模态基准上自称 SOTA，并在 VQAv2/OKVQA/TextVQA/COCO captioning 上排名第二。",
-      "magnitude": "总参 17B（100 亿视觉参数 + 70 亿语言参数）"
+      "magnitude": "总参 17B"
     },
     {
       "id": "glm-cogagent-chat-hf",
@@ -2536,7 +2536,7 @@ export const dataset: Dataset = {
       "lane": "多模态",
       "mechanism": "首个把 VLM 用作 GUI Agent：对任意 GUI 截图直接返回任务计划、下一步动作与操作坐标，并支持 1120x1120 超高清输入。",
       "impact": "CogAgent-18B 是在 CogVLM 基础上改进的视觉语言模型（11B 视觉 + 7B 语言），主打 GUI Agent、高分辨率图像理解与 OCR 增强，是 cogagent-chat 版本权重。",
-      "magnitude": "总参 18B（11B 视觉 + 7B 语言参数）"
+      "magnitude": "总参 18B"
     },
     {
       "id": "glm-cogvlm2-llama3-chat-19b",
@@ -2580,7 +2580,7 @@ export const dataset: Dataset = {
       "lane": "多模态",
       "mechanism": "把文生视频门槛压到消费级：diffusers FP16 最低 4GB、INT8(torchao) 3.6GB 显存即可推理（推理速度 A100 约 90 秒/50 步）。",
       "impact": "CogVideoX 开源文生视频模型的入门版本（2B，FP16 训练），输出 720×480、6 秒、8 fps 视频，主打低成本推理与二次开发。",
-      "magnitude": "总参 2B（模型名写法）"
+      "magnitude": "总参 2B"
     },
     {
       "id": "glm-cogvideox-5b",
@@ -2591,7 +2591,7 @@ export const dataset: Dataset = {
       "lane": "多模态",
       "mechanism": "用 3d_rope_pos_embed 替换 3d_sincos_pos_embed 以提升生成质量，推理显存最低 5GB（多卡 15GB，A100 约 180 秒/50 步）。",
       "impact": "CogVideoX 开源文生视频模型的较大规模版本（5B，BF16 训练），相比 2B 版本提供更高的视频生成质量与视觉效果。",
-      "magnitude": "总参 5B（模型名写法）"
+      "magnitude": "总参 5B"
     },
     {
       "id": "glm-glm-4-voice-9b",
@@ -2602,7 +2602,7 @@ export const dataset: Dataset = {
       "lane": "多模态",
       "mechanism": "端到端语音对话并可按指令改变情感、语调、语速与方言，无需级联 ASR+TTS。",
       "impact": "GLM-4-Voice 端到端语音模型的 LLM 部分：在 GLM-4-9B 基础上做语音模态预训练与对齐，可直接理解和生成中英文离散化语音并实时对话。",
-      "magnitude": "总参 9B（模型名写法）"
+      "magnitude": "总参 9B"
     },
     {
       "id": "glm-cogvideox1-5-5b",
@@ -2613,7 +2613,7 @@ export const dataset: Dataset = {
       "lane": "多模态",
       "mechanism": "分辨率从 720×480 提升到 1360×768、帧率 8→16 fps，视频时长由 6 秒扩展到 5/10 秒（A100 约 1000 秒/50 步）。",
       "impact": "CogVideoX 的 1.5 代 5B 文生/图生视频模型（模型卡标注发布日 2024-11-08），分辨率升到 1360×768、帧率 16 fps、支持 5 秒或 10 秒视频。",
-      "magnitude": "总参 5B（模型名写法）"
+      "magnitude": "总参 5B"
     },
     {
       "id": "glm-glm-4-32b-0414",
@@ -2624,7 +2624,7 @@ export const dataset: Dataset = {
       "lane": "训练",
       "mechanism": "32B 稠密模型在 IFEval(87.6)、BFCL-v3(69.6)、TAU-Bench Retail(68.7)、SimpleQA(88.1) 上追平乃至超过 GPT-4o-1120 与 671B 的 DeepSeek-V3-0324，并以 MIT 许可开源。",
       "impact": "GLM-4-0414 系列的主力 32B 稠密模型（2025-04 发布，MIT 许可），基座 GLM-4-32B-Base-0414 用 15T 数据预训练，卡内自述在多项基准上对标 GPT-4o 与 DeepSeek-V3-0324(671B)。",
-      "magnitude": "总参 32B（32 billion parameters；HF API safetensors 总计 32566081536）"
+      "magnitude": "总参 32B"
     },
     {
       "id": "glm-glm-z1-32b-0414",

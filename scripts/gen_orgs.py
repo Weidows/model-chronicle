@@ -108,6 +108,16 @@ def short_label(entry: dict) -> str:
     return head[:8] or "突破"
 
 
+def norm_params(raw) -> str | None:
+    """Card labels are sometimes verbose ("62 亿（6.2 billion parameters）"): keep
+    the part that carries the number and drop the parenthetical commentary."""
+    if raw is None:
+        return None
+    s = re.split(r"[（(]", str(raw))[0].strip()
+    s = re.sub(r"\s*(parameters|params)\s*$", "", s, flags=re.I).strip()
+    return s or None
+
+
 def magnitude_of(rel: dict) -> str:
     if rel.get("contextLength"):
         return f"上下文 {rel['contextLength']}"
@@ -163,9 +173,9 @@ def main() -> None:
                 "family": FAMILY.get(slug, "LLM"),
                 "date": e.get("date"),
                 "tier": tier,
-                "totalParams": e.get("totalParams"),
+                "totalParams": norm_params(e.get("totalParams")),
                 "paramsSource": "card" in (e.get("paramsSource") or "") or None,
-                "activatedParams": e.get("activatedParams"),
+                "activatedParams": norm_params(e.get("activatedParams")),
                 "contextLength": e.get("contextLength"),
                 "license": e.get("license"),
                 "downloads": api.get("downloads") or 0,

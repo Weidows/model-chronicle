@@ -181,7 +181,8 @@ interface TimelineProps {
   orgs?: OrgMeta[]
   /** Org ids currently switched on. */
   activeOrgs?: Set<string>
-  onToggleOrg?: (id: string) => void
+  /** Isolate a lab, or add/remove one when `additive`. */
+  onChooseOrg?: (id: string, additive: boolean) => void
   /** Show the lab badge on every card (combined view). */
   showOrg?: boolean
 }
@@ -190,7 +191,7 @@ const orgShort = (id: string | undefined, orgs?: OrgMeta[]) =>
   orgs?.find((o) => o.id === id)?.short ?? ''
 const orgHue = (id: string | undefined, orgs?: OrgMeta[]) => orgs?.find((o) => o.id === id)?.hue ?? 190
 
-export function Timeline({ data, orgs, activeOrgs, onToggleOrg, showOrg }: TimelineProps) {
+export function Timeline({ data, orgs, activeOrgs, onChooseOrg, showOrg }: TimelineProps) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const [vw, setVw] = useState(1440)
   const [vh, setVh] = useState(880)
@@ -402,8 +403,8 @@ export function Timeline({ data, orgs, activeOrgs, onToggleOrg, showOrg }: Timel
                 return (
                   <button
                     key={o.id}
-                    onClick={() => onToggleOrg?.(o.id)}
-                    title={`${o.name} — ${o.blurb}`}
+                    onClick={(e) => onChooseOrg?.(o.id, e.shiftKey || e.metaKey || e.ctrlKey)}
+                    title={`${o.name} — ${o.blurb}（Shift 多选）`}
                     className={cn(
                       'inline-flex items-center gap-1.5 rounded-sm border px-2 py-1 font-mono text-[10px] tracking-wider whitespace-nowrap transition',
                       on ? 'border-edge text-snow/90' : 'border-edge/60 text-fog/45 hover:text-fog',

@@ -2475,7 +2475,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-chatglm-6b",
       "date": "2023-03-13",
-      "label": "GLM",
+      "label": "RLHF",
       "name": "以 62 亿参数配合 INT4 量化",
       "releaseId": "chatglm-6b",
       "lane": "推理",
@@ -2486,7 +2486,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-chatglm2-6b",
       "date": "2023-06-24",
-      "label": "FlashAttention",
+      "label": "GLM·2-6B",
       "name": "上下文长度由初代的 2K 扩展至 32K",
       "releaseId": "chatglm2-6b",
       "lane": "训练",
@@ -2497,7 +2497,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-codegeex2-6b",
       "date": "2023-07-19",
-      "label": "ChatGLM2-6B",
+      "label": "INT4",
       "name": "仅 60 亿参数即在 HumanEval-X",
       "releaseId": "codegeex2-6b",
       "lane": "训练",
@@ -2519,7 +2519,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-cogvlm-chat-hf",
       "date": "2023-11-16",
-      "label": "Visual",
+      "label": "MLP",
       "name": "视觉专家模块",
       "releaseId": "cogvlm-chat-hf",
       "lane": "多模态",
@@ -2530,7 +2530,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-cogagent-chat-hf",
       "date": "2023-12-15",
-      "label": "x1120",
+      "label": "GUI·CogAgent-18B",
       "name": "首个把 VLM 用作 GUI Agent",
       "releaseId": "cogagent-chat-hf",
       "lane": "多模态",
@@ -2541,7 +2541,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-cogvlm2-llama3-chat-19b",
       "date": "2024-05-16",
-      "label": "Meta-Llama-3-8B-",
+      "label": "GPT",
       "name": "图文文档理解大幅跃升",
       "releaseId": "cogvlm2-llama3-chat-19b",
       "lane": "多模态",
@@ -2552,7 +2552,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-glm-4-9b-chat",
       "date": "2024-06-04",
-      "label": "Function",
+      "label": "BFCL",
       "name": "把 128K 长上下文、26 种多语言与 F",
       "releaseId": "glm-4-9b-chat",
       "lane": "推理",
@@ -2563,7 +2563,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-glm-4v-9b",
       "date": "2024-06-04",
-      "label": "OCRBench",
+      "label": "AI2D",
       "name": "高分辨率文字识别反超闭源旗舰",
       "releaseId": "glm-4v-9b",
       "lane": "多模态",
@@ -2574,7 +2574,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-cogvideox-2b",
       "date": "2024-08-05",
-      "label": "Expert",
+      "label": "torchao",
       "name": "把文生视频门槛压到消费级",
       "releaseId": "cogvideox-2b",
       "lane": "多模态",
@@ -2585,7 +2585,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-cogvideox-5b",
       "date": "2024-08-17",
-      "label": "rope",
+      "label": "BF16·CogVideoX-5B",
       "name": "用 3d_rope_pos_embed 替换",
       "releaseId": "cogvideox-5b",
       "lane": "多模态",
@@ -2596,7 +2596,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-glm-4-voice-9b",
       "date": "2024-10-24",
-      "label": "token",
+      "label": "GLM·4-Voice-9B",
       "name": "端到端语音对话并可按指令改变情感、语调、语速",
       "releaseId": "glm-4-voice-9b",
       "lane": "多模态",
@@ -2607,7 +2607,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-cogvideox1-5-5b",
       "date": "2024-11-02",
-      "label": "frames",
+      "label": "BF16·CogVideoX1.5",
       "name": "分辨率从 720×480 提升到 1360×",
       "releaseId": "cogvideox1-5-5b",
       "lane": "多模态",
@@ -2618,7 +2618,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-glm-4-32b-0414",
       "date": "2025-04-07",
-      "label": "Artifact",
+      "label": "SWE·4-32B-0414",
       "name": "32B 稠密模型在 IFEval",
       "releaseId": "glm-4-32b-0414",
       "lane": "训练",
@@ -2629,7 +2629,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-glm-z1-32b-0414",
       "date": "2025-04-08",
-      "label": "RL",
+      "label": "RL·Z1-32B-0414",
       "name": "在 32B 开源规模上做出对标 DeepSe",
       "releaseId": "glm-z1-32b-0414",
       "lane": "训练",
@@ -2640,7 +2640,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-glm-4-1v-9b-thinking",
       "date": "2025-06-28",
-      "label": "Thinking",
+      "label": "RL·4.1V",
       "name": "首个以「思考范式 + 强化学习」训练的 GL",
       "releaseId": "glm-4-1v-9b-thinking",
       "lane": "多模态",
@@ -2651,7 +2651,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-glm-4-5",
       "date": "2025-07-20",
-      "label": "B-A32B",
+      "label": "A32B",
       "name": "以 355B-A32B 规模在 12 项标准",
       "releaseId": "glm-4-5",
       "lane": "推理",
@@ -2662,7 +2662,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-glm-4-5-air",
       "date": "2025-07-20",
-      "label": "B-A12B",
+      "label": "A12B",
       "name": "以 106B-A12B 的紧凑设计拿到 59",
       "releaseId": "glm-4-5-air",
       "lane": "推理",
@@ -2673,7 +2673,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-glm-4-5v",
       "date": "2025-08-10",
-      "label": "GLM-4.5-Air",
+      "label": "GLM·4.5V",
       "name": "在 42 项公开视觉语言基准上取得同规模 S",
       "releaseId": "glm-4-5v",
       "lane": "多模态",
@@ -2695,7 +2695,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-glm-4-6v-flash",
       "date": "2025-12-07",
-      "label": "Function",
+      "label": "HTML",
       "name": "首次在 GLM-V 系列引入原生 Funct",
       "releaseId": "glm-4-6v-flash",
       "lane": "多模态",
@@ -2706,7 +2706,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-autoglm-phone-9b",
       "date": "2025-12-08",
-      "label": "GUI",
+      "label": "GUI·AutoGLM",
       "name": "把视觉语言模型直接接进真实手机 GUI",
       "releaseId": "autoglm-phone-9b",
       "lane": "多模态",
@@ -2717,7 +2717,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-glm-asr-nano-2512",
       "date": "2025-12-09",
-      "label": "Wenet",
+      "label": "V3",
       "name": "以 1.5B 规模取得同类开源模型最低平均错",
       "releaseId": "glm-asr-nano-2512",
       "lane": "多模态",
@@ -2728,7 +2728,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-glm-4-7",
       "date": "2025-12-22",
-      "label": "Interleaved",
+      "label": "SWE·4.7",
       "name": "SWE-bench Verified 73.",
       "releaseId": "glm-4-7",
       "lane": "后训练",
@@ -2739,7 +2739,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-glm-image",
       "date": "2026-01-08",
-      "label": "GLM-4-9B-0414",
+      "label": "GLM·Image",
       "name": "CVTG-2K 词准确率 0.9116 / ",
       "releaseId": "glm-image",
       "lane": "多模态",
@@ -2750,7 +2750,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-glm-4-7-flash",
       "date": "2026-01-19",
-      "label": "B-A3B",
+      "label": "A3B",
       "name": "以 30B-A3B 在 SWE-bench ",
       "releaseId": "glm-4-7-flash",
       "lane": "架构",
@@ -2761,7 +2761,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-glm-ocr",
       "date": "2026-01-30",
-      "label": "Multi-Token",
+      "label": "MTP·OCR",
       "name": "以 0.9B 规模在 OmniDocBenc",
       "releaseId": "glm-ocr",
       "lane": "多模态",
@@ -2772,7 +2772,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-glm-5",
       "date": "2026-02-11",
-      "label": "B-A40B",
+      "label": "DSA",
       "name": "从 GLM-4.5 的 355B-A32B ",
       "releaseId": "glm-5",
       "lane": "训练",
@@ -2783,7 +2783,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-glm-5-1",
       "date": "2026-04-03",
-      "label": "agentic",
+      "label": "SWE·5.1",
       "name": "在长程任务上可维持数百轮优化、数千次工具调用",
       "releaseId": "glm-5-1",
       "lane": "后训练",
@@ -2794,7 +2794,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-glm-5-2",
       "date": "2026-06-16",
-      "label": "solid",
+      "label": "MTP·5.2",
       "name": "solid 1M 上下文 + IndexSh",
       "releaseId": "glm-5-2",
       "lane": "训练",
@@ -2805,7 +2805,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-glm-5-3",
       "date": "2026-08-25",
-      "label": "GLM-5.2",
+      "label": "GLM·5.3",
       "name": "编码能力较 GLM-5.2 提升 50%",
       "releaseId": "glm-5-3",
       "lane": "训练",
@@ -2816,7 +2816,7 @@ export const dataset: Dataset = {
     {
       "id": "glm-glm-5-3-flash",
       "date": "2026-08-25",
-      "label": "GLM-5",
+      "label": "mHC",
       "name": "首次在 GLM 系列引入稀疏+线性混合注意力",
       "releaseId": "glm-5-3-flash",
       "lane": "多模态",

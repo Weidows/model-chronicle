@@ -90,9 +90,14 @@ export function TechRibbon({ data }: { data: Dataset }) {
                   transition={{ duration: 0.55, delay: Math.min(0.3, i * 0.03), ease: [0.22, 1, 0.36, 1] }}
                   className="grid grid-cols-1 items-center gap-2 border-b border-edge/40 px-4 py-3 last:border-b-0 hover:bg-white/2 md:grid-cols-[7.5rem_5.5rem_1fr]"
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex min-w-0 items-center gap-2">
                     <Zap className="size-3.5 shrink-0" style={{ color: tone.hex }} strokeWidth={2} />
-                    <span className={cn('font-mono text-[11px] tracking-wider', tone.text)}>{b.label}</span>
+                    <span
+                      className={cn('truncate font-mono text-[11px] tracking-wider', tone.text)}
+                      title={b.label}
+                    >
+                      {b.label}
+                    </span>
                   </div>
                   <span className="num text-[10px] text-fog/70">{fmtDate(b.date)}</span>
 

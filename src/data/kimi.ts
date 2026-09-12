@@ -2206,7 +2206,7 @@ export const dataset: Dataset = {
     {
       "id": "kimi-moonlight-16b-a3b-instruct",
       "date": "2025-02-22",
-      "label": "Muon",
+      "label": "RMS",
       "name": "首次证明 Muon 优化器可用于大规模 LL",
       "releaseId": "moonlight-16b-a3b-instruct",
       "lane": "训练",
@@ -2217,7 +2217,7 @@ export const dataset: Dataset = {
     {
       "id": "kimi-kimi-vl-a3b-instruct",
       "date": "2025-04-09",
-      "label": "MoE",
+      "label": "MLP",
       "name": "以 2.8B+0.4B 激活参数在 Scre",
       "releaseId": "kimi-vl-a3b-instruct",
       "lane": "多模态",
@@ -2228,7 +2228,7 @@ export const dataset: Dataset = {
     {
       "id": "kimi-kimi-dev-72b",
       "date": "2025-06-16",
-      "label": "Docker",
+      "label": "SWE",
       "name": "SWE-bench Verified 达 6",
       "releaseId": "kimi-dev-72b",
       "lane": "后训练",
@@ -2250,7 +2250,7 @@ export const dataset: Dataset = {
     {
       "id": "kimi-kimi-k2-base",
       "date": "2025-07-03",
-      "label": "MuonClip",
+      "label": "MLA·K2-Base",
       "name": "MuonClip 优化器把 Muon 首次扩",
       "releaseId": "kimi-k2-base",
       "lane": "训练",
@@ -2261,7 +2261,7 @@ export const dataset: Dataset = {
     {
       "id": "kimi-kimi-k2-instruct",
       "date": "2025-07-11",
-      "label": "MuonClip",
+      "label": "MLA·K2-Instruct",
       "name": "开源 1T 参数级 agentic 模型",
       "releaseId": "kimi-k2-instruct",
       "lane": "训练",
@@ -2272,7 +2272,7 @@ export const dataset: Dataset = {
     {
       "id": "kimi-kimi-linear-48b-a3b-instruct",
       "date": "2025-10-30",
-      "label": "Kimi",
+      "label": "KDA·Linear",
       "name": "KDA 混合线性注意力",
       "releaseId": "kimi-linear-48b-a3b-instruct",
       "lane": "推理",
@@ -2283,7 +2283,7 @@ export const dataset: Dataset = {
     {
       "id": "kimi-kimi-k2-thinking",
       "date": "2025-11-04",
-      "label": "INT4",
+      "label": "QAT",
       "name": "QAT 原生 INT4 量化实现约 2x 生",
       "releaseId": "kimi-k2-thinking",
       "lane": "推理",
@@ -2294,7 +2294,7 @@ export const dataset: Dataset = {
     {
       "id": "kimi-kimi-k2-5",
       "date": "2026-01-01",
-      "label": "token",
+      "label": "INT4·K2.5",
       "name": "原生多模态 + Agent Swarm",
       "releaseId": "kimi-k2-5",
       "lane": "多模态",
@@ -2305,7 +2305,7 @@ export const dataset: Dataset = {
     {
       "id": "kimi-kimi-k2-6",
       "date": "2026-04-14",
-      "label": "Agent",
+      "label": "INT4·K2.6",
       "name": "Agent Swarm 横向扩展到 300 ",
       "releaseId": "kimi-k2-6",
       "lane": "后训练",
@@ -2316,7 +2316,7 @@ export const dataset: Dataset = {
     {
       "id": "kimi-kimi-k2-7-code",
       "date": "2026-06-11",
-      "label": "K2.6",
+      "label": "K2",
       "name": "相比 K2.6 思考 token 用量减少约",
       "releaseId": "kimi-k2-7-code",
       "lane": "训练",
@@ -2327,7 +2327,7 @@ export const dataset: Dataset = {
     {
       "id": "kimi-kimi-k3",
       "date": "2026-06-13",
-      "label": "Kimi",
+      "label": "KDA·K3",
       "name": "以 KDA+Attention Residu",
       "releaseId": "kimi-k3",
       "lane": "推理",

@@ -9,6 +9,7 @@ HF API, never invented. Missing values stay null and the UI prints 未公开.
 """
 from __future__ import annotations
 
+import collections
 import json
 import re
 from datetime import date
@@ -96,15 +97,37 @@ def lane_of(text: str) -> str:
     return "架构"
 
 
+MODELISH = re.compile(
+    r"^(meta|llama|qwen|mistral|gemma|bloom|gpt|deepseek|glm|chatglm|kimi|moonshot|internlm|"
+    r"baichuan|stablelm|phi|vicuna|yi|falcon|mixtral)",
+    re.I,
+)
+STOP_LABELS = {"GPU", "CPU", "API", "SOTA", "URL", "JSON", "SQL", "HTTP", "REST", "OSS", "CLI", "UI", "UX"}
+
+
 def short_label(entry: dict) -> str:
-    """A short, verbatim-ish label: prefer a Latin/technical token the card uses."""
-    pool = list(entry.get("innovations") or []) + [entry.get("breakthrough") or ""]
+    """A short label for the timeline marker, taken from what the card claims.
+
+    Order matters: an acronym the card spells out in parentheses ("Kimi Delta
+    Attention (KDA)") beats a bare capitalised token, and a base model's name
+    ("Meta-Llama-3-8B-Instruct 基座") is never a technique label.
+    """
+    pool = [str(x) for x in (entry.get("innovations") or [])] + [str(entry.get("breakthrough") or "")]
     for text in pool:
-        for tok in re.findall(r"[A-Za-z][A-Za-z0-9\-\.]{1,15}", text or ""):
-            if tok.lower() in {"the", "and", "with", "using", "model", "based", "for", "from"}:
+        m = re.search(r"\(([A-Za-z][A-Za-z0-9\-]{1,8})\)", text)
+        if m:
+            return m.group(1)
+    for text in pool:
+        m = re.search(r"\b([A-Z][A-Z0-9]{1,5})\b", text)
+        if m and m.group(1) not in STOP_LABELS:
+            return m.group(1)
+    for text in pool:
+        for tok in re.findall(r"[A-Za-z][A-Za-z0-9\-.]{2,11}", text):
+            t = tok.strip("-.")
+            if MODELISH.match(t) or re.search(r"-\d+[BbTt]$", t) or len(t) < 3:
                 continue
-            return tok
-    head = re.split(r"[，,。：:（(]", (entry.get("breakthrough") or "").strip())[0]
+            return t
+    head = re.split(r"[，,。：:（(]", str(entry.get("breakthrough") or "").strip())[0]
     return head[:8] or "突破"
 
 
@@ -255,6 +278,20 @@ def main() -> None:
                     "impact": rel["summary"],
                     "magnitude": magnitude_of(rel),
                 })
+
+        # Cards reuse generic words ("INT4", "SWE", "GLM") across releases: when a
+        # label repeats, suffix the version it came from so two markers that share
+        # a name are still distinguishable on the timeline.
+        counts = collections.Counter(b["label"] for b in breakthroughs)
+        for b in breakthroughs:
+            if counts[b["label"]] > 1:
+                rel = next((r for r in releases if r["id"] == b["releaseId"]), None)
+                if rel:
+                    short = re.sub(r"^(GLM|Kimi|ChatGLM|Moonlight|DeepSeek)[- ]?", "", rel["name"])
+                    # keep the suffix short enough for a fixed-width label column
+                    if len(short) > 12:
+                        short = short.split("-")[0]
+                    b["label"] = f"{b['label']}·{short}"
 
         doc = {
             "org": org,

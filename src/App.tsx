@@ -141,7 +141,7 @@ export default function App() {
           showOrg={dataset.org === 'combined'}
         />
         <TechRibbon data={dataset} />
-        <Analytics data={dataset} />
+        <Analytics data={dataset} orgs={ORGS} />
       </main>
 
       <Footer data={dataset} />

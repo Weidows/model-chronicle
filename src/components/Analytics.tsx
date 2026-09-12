@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from 'motion/react'
 import { BarChart3, Heart, Layers, TrendingUp } from 'lucide-react'
 
-import type { Dataset } from '../data/types'
+import type { Dataset, OrgMeta } from '../data/types'
 import { CapabilityCurve } from './charts/CapabilityCurve'
 import { DownloadPulse } from './charts/DownloadPulse'
 import { LikesBoard } from './charts/LikesBoard'
@@ -46,7 +46,7 @@ function PanelBody({
   )
 }
 
-export function Analytics({ data }: { data: Dataset }) {
+export function Analytics({ data, orgs }: { data: Dataset; orgs?: OrgMeta[] }) {
   const totalDownloads = data.releases.reduce((a, r) => a + r.downloads, 0)
   const totalLikes = data.releases.reduce((a, r) => a + r.likes, 0)
 
@@ -65,7 +65,7 @@ export function Analytics({ data }: { data: Dataset }) {
         lede={
           <>
             同一条时间轴换四种刻度来看：下载热度（近 30 天）、收藏口碑（累计点赞）、
-            跨代能力（模型卡共同汇报的那一项测评）、以及参数量与激活量的裂口。
+            跨代能力（模型卡共同汇报的那一项测评，可在同为多家所报的指标之间切换）、以及参数量与激活量的裂口。
             全部数值来自 Hugging Face 官方 API 快照与官方模型卡，未做任何平滑或补值。
           </>
         }
@@ -92,7 +92,7 @@ export function Analytics({ data }: { data: Dataset }) {
           span
           delay={0.12}
         >
-          <CapabilityCurve releases={data.releases} />
+          <CapabilityCurve releases={data.releases} orgs={orgs} />
         </PanelBody>
 
         <PanelBody icon={<Layers size={16} />} kicker="SCALE" title="参数量阶梯" span delay={0.16}>

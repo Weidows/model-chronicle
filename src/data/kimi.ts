@@ -1901,7 +1901,7 @@ export const dataset: Dataset = {
       "totalParams": "2.8T",
       "paramsSource": "card",
       "activatedParams": "104B",
-      "contextLength": "1048576",
+      "contextLength": "1M",
       "license": "kimi-k3",
       "downloads": 2277273,
       "likes": 11299,
@@ -2333,7 +2333,7 @@ export const dataset: Dataset = {
       "lane": "推理",
       "mechanism": "以 KDA+Attention Residuals+Stable LatentMoE（896 专家激活 16）把 MoE 稀疏度推高，整体扩展效率较 Kimi K2 提升约 2.5x",
       "impact": "全球首个开源的 3T 级模型：2.8T 总参/104B 激活，基于 KDA + AttnRes + Stable LatentMoE，原生多模态，1M token 上下文（模型卡写作 1048576）。",
-      "magnitude": "上下文 1048576"
+      "magnitude": "上下文 1M"
     }
   ]
 } as Dataset

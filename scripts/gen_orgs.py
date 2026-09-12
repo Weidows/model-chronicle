@@ -118,6 +118,23 @@ def norm_params(raw) -> str | None:
     return s or None
 
 
+def norm_ctx(raw) -> str | None:
+    """Cards sometimes print a raw token count where every sibling says "1M" —
+    show one unit so the context chip stays readable (1048576 → 1M)."""
+    if raw is None:
+        return None
+    s = str(raw).strip()
+    if s.isdigit():
+        n = int(s)
+        if n >= 1_048_576 and n % 1_048_576 == 0:
+            return f"{n // 1_048_576}M"
+        if n >= 1_000_000:
+            return f"{round(n / 1_000_000)}M"
+        if n >= 1024:
+            return f"{round(n / 1024)}K"
+    return s
+
+
 def magnitude_of(rel: dict) -> str:
     if rel.get("contextLength"):
         return f"上下文 {rel['contextLength']}"
@@ -176,7 +193,7 @@ def main() -> None:
                 "totalParams": norm_params(e.get("totalParams")),
                 "paramsSource": "card" in (e.get("paramsSource") or "") or None,
                 "activatedParams": norm_params(e.get("activatedParams")),
-                "contextLength": e.get("contextLength"),
+                "contextLength": norm_ctx(e.get("contextLength")),
                 "license": e.get("license"),
                 "downloads": api.get("downloads") or 0,
                 "likes": api.get("likes") or 0,

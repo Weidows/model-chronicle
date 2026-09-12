@@ -1102,7 +1102,7 @@ export const dataset: Dataset = {
       "totalParams": "32B",
       "paramsSource": "card",
       "activatedParams": null,
-      "contextLength": "32768",
+      "contextLength": "32K",
       "license": "mit",
       "downloads": 50636,
       "likes": 196,
@@ -2635,7 +2635,7 @@ export const dataset: Dataset = {
       "lane": "训练",
       "mechanism": "在 32B 开源规模上做出对标 DeepSeek V3/R1 的深度推理能力，数学与复杂任务较底座显著提升。",
       "impact": "基于 GLM-4-32B-0414 经冷启动与扩展强化学习打造的 32B 深度思考推理模型。",
-      "magnitude": "上下文 32768"
+      "magnitude": "上下文 32K"
     },
     {
       "id": "glm-glm-4-1v-9b-thinking",

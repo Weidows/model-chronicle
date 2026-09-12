@@ -66,7 +66,7 @@ export function Footer({ data }: { data: Dataset }) {
             MODEL CHRONICLE · BUILT WITH REACT + TAILWIND + MOTION
           </span>
           <span className="font-mono text-[10px] tracking-widest text-fog/50">
-            非官方整理，与 DeepSeek 无隶属关系
+            非官方整理，与各模型厂商均无隶属关系
           </span>
         </div>
       </div>

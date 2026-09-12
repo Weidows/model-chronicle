@@ -11,6 +11,9 @@ import { cn } from '../lib/utils'
 export function Hero({ data }: { data: Dataset }) {
   const reduced = useReducedMotion()
   const latest = data.releases[data.releases.length - 1]
+  const yearOf = (iso: string) => iso.slice(0, 4)
+  /** Ticker/orbit labels: drop the brand prefix so the tail of long names fits. */
+  const shortName = (n: string) => n.replace(/^(DeepSeek|Kimi|GLM|ChatGLM|Moonlight|MoonViT)[- ]/, '') || n
   const totals = useMemo(() => {
     const downloads = data.releases.reduce((s, r) => s + r.downloads, 0)
     const likes = data.releases.reduce((s, r) => s + r.likes, 0)
@@ -50,7 +53,7 @@ export function Hero({ data }: { data: Dataset }) {
             >
               <span className="animate-flicker block text-snow text-glow">模型编年史</span>
               <span className="mt-1 block bg-gradient-to-r from-cyan via-mint to-violet bg-clip-text text-[clamp(1.1rem,2.6vw,2rem)] font-medium tracking-[0.02em] text-transparent">
-                {data.orgName} 的三年，横轴即时间
+                {data.orgName} · {yearOf(data.releases[0].date)}–{yearOf(latest.date)}，横轴即时间
               </span>
             </motion.h1>
 
@@ -60,8 +63,8 @@ export function Hero({ data }: { data: Dataset }) {
               transition={{ duration: 0.8, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
               className="max-w-xl text-sm leading-relaxed text-fog sm:text-base"
             >
-              从 7B 稠密模型到 671B 稀疏专家，从 MLA 到 CSA2，这条时间轴记录了每一次开源发布、
-              每一项关键技术突破、以及官方给出的实测分数和真实下载量。
+              从稠密小模型到万亿级稀疏专家，这条时间轴记录了每一次开源发布、每一项关键技术突破，
+              以及官方给出的实测分数与真实下载量。
             </motion.p>
           </div>
 
@@ -164,8 +167,8 @@ export function Hero({ data }: { data: Dataset }) {
                   }}
                 >
                   <span className={cn('size-1.5 rounded-full', familyTone[r.family].dot)} />
-                  <span className="hidden font-mono text-[9px] tracking-wider text-fog/70 sm:inline">
-                    {r.name.replace('DeepSeek-', '')}
+                  <span className="hidden font-mono text-[9px] tracking-wider whitespace-nowrap text-fog/70 sm:inline">
+                    {shortName(r.name)}
                   </span>
                 </motion.div>
               )

@@ -114,7 +114,7 @@ export function TechRibbon({ data }: { data: Dataset }) {
                       />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-xs text-snow/90">
+                      <p className="line-clamp-2 text-xs leading-relaxed text-snow/90" title={`${b.name} | ${b.mechanism}`}>
                         <span className="text-fog">{b.name}</span>
                         <span className="mx-1.5 text-edge">|</span>
                         {b.mechanism}

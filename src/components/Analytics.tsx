@@ -57,7 +57,7 @@ export function Analytics({ data }: { data: Dataset }) {
         kicker="TELEMETRY"
         title={
           <>
-            把 31 个节点
+            把 {data.releases.length} 个节点
             <br className="hidden sm:block" />
             摊成四条曲线
           </>

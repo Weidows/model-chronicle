@@ -2,7 +2,7 @@
 
 把一家实验室的开源发布史摊在一条**横轴**上：发布日期、关键突破技术、官方测评分数、参数量、下载量与仓库体积，全部来自 Hugging Face 官方 API 快照与官方模型卡。
 
-首卷：**DeepSeek（2023.10 → 2026.09，31 个节点）**。
+现在收录三家：**DeepSeek**（2023.10 → 2026.09）、**智谱 GLM**（2023.03 → 2026.08）、**月之暗面 Kimi**（2025.02 → 2026.06），合计 **84 个发布节点、68 项技术突破**，顶部可按厂商切换或三卷并看。
 
 在线预览：<https://model-chronicle.weidows.tech/>（GitHub Pages + 自定义域；`weidows.github.io/model-chronicle/` 与 `blog.weidows.tech/model-chronicle/` 均会 301 到同一地址）
 
@@ -45,21 +45,24 @@ npm run preview      # 预览构建产物
 
 ## 数据从哪来
 
-两份原始事实源，**没有一条编造或补值**：
+三个实验室的公开权重，**没有一条编造或补值**：
 
-1. `https://huggingface.co/api/models?author=deepseek-ai` 组织列表（105 个仓库）与逐仓库详情
-   → `downloads`（**近 30 天滚动**）、`likes`（累计）、`createdAt`、`usedStorage`、`trendingScore`
+1. `https://huggingface.co/api/models?author=<org>` 组织列表（DeepSeek 105 / zai-org 154 / moonshotai 19 个仓库）
+   与逐仓库详情 → `downloads`（**近 30 天滚动**）、`likes`（累计）、`createdAt`、`usedStorage`
 2. 各仓库模型卡 README → 参数量、激活量、上下文、许可协议、官方评测分数
 
 ```bash
-python scripts/fetch_raw.py     # 抓原始数据到 scripts/raw/（需要本机代理，见脚本注释）
-python scripts/gen_data.py      # 合并人工策展层，生成 src/data/deepseek.ts
+python scripts/fetch_raw.py      # DeepSeek：原始数据 → scripts/raw/
+python scripts/gen_data.py       # DeepSeek：合并策展层 → src/data/deepseek.ts
+python scripts/fetch_family.py   # GLM / Kimi：原始数据 → scripts/raw/<org>/（需本机代理）
+python scripts/gen_orgs.py       # GLM / Kimi：抽取结果 → src/data/{zai,kimi}.ts + src/data/index.ts
 ```
 
-- `scripts/gen_data.py` 里有两块**人工策展**：`OVERLAY`（中文摘要、突破点、家族/分级、benchmark 取舍）
-  与 `LABELS`（模型卡没写、只存在于论文或兄弟仓库的参数与许可）。数值一律从原始数据读，
-  策展只负责措辞与归类。
-- 模型卡未标注的字段一律 `null`，页面显示“未公开 / 未标注”，不做推测。唯一例外是 **8 个节点**
+- DeepSeek 那一路（`gen_data.py`）有两块**人工策展**：`OVERLAY`（中文摘要、突破点、家族/分级、benchmark 取舍）
+  与 `LABELS`（模型卡没写、只存在于论文或兄弟仓库的参数与许可）。数值一律从原始数据读，策展只负责措辞与归类。
+- GLM / Kimi 那一路（`gen_orgs.py`）是机械转换：模型卡读数 → 结构化字段，家族/分级/泳道来自脚本里的显式映射表，
+  事实由 `scripts/raw/<org>/extract.json` 承载，可逐条回模型卡复算。
+- 模型卡未标注的字段一律 `null`，页面显示“未公开 / 未标注”，不做推测。DeepSeek 侧唯一例外是 **8 个节点**
   （V2.5、VL2、Janus-Pro、V3-0324、R1-0528、V3.1-Terminus、V3.2-Exp、Math-V2）的参数量：
   它们按同代基座推定，档案里会明确打出**“家族推定”**标记并附说明，不会冒充模型卡原文。
 - 下载量口径：HF 报告的是**滚动 30 天**，刚发布的模型天然偏低，因此另设累计点赞榜做长期热度参照。
@@ -68,7 +71,10 @@ python scripts/gen_data.py      # 合并人工策展层，生成 src/data/deepse
 
 ```
 src/
-  data/deepseek.ts      生成的数据（勿手改）
+  data/deepseek.ts      DeepSeek 数据（生成，勿手改）
+  data/zai.ts           GLM 数据（生成，勿手改）
+  data/kimi.ts          Kimi 数据（生成，勿手改）
+  data/index.ts         家族注册表 + 合并视图（生成，勿手改）
   data/types.ts         Dataset / Release / Breakthrough 类型
   components/
     Starfield.tsx       分层星野 canvas（视差 + 闪烁）

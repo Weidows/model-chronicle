@@ -58,6 +58,34 @@ export const familyTone: Record<Family, { text: string; bg: string; ring: string
     dot: 'bg-rose',
     hex: '#ff5d73',
   },
+  Image: {
+    text: 'text-amber',
+    bg: 'bg-amber/12',
+    ring: 'ring-amber/40',
+    dot: 'bg-amber',
+    hex: '#ffb545',
+  },
+  Video: {
+    text: 'text-violet',
+    bg: 'bg-violet/14',
+    ring: 'ring-violet/40',
+    dot: 'bg-violet',
+    hex: '#9270ff',
+  },
+  Audio: {
+    text: 'text-mint',
+    bg: 'bg-mint/12',
+    ring: 'ring-mint/40',
+    dot: 'bg-mint',
+    hex: '#2fe6a8',
+  },
+  Agent: {
+    text: 'text-cyan',
+    bg: 'bg-cyan/12',
+    ring: 'ring-cyan/40',
+    dot: 'bg-cyan',
+    hex: '#38e2ff',
+  },
 }
 
 export const tierTone: Record<Tier, { label: string; size: number; glow: number }> = {
@@ -75,4 +103,8 @@ export const familyLabel: Record<Family, string> = {
   Janus: '统一多模态',
   OCR: '文档视觉',
   Reasoning: '推理',
+  Image: '图像生成',
+  Video: '视频生成',
+  Audio: '语音',
+  Agent: '智能体',
 }

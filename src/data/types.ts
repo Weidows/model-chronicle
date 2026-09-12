@@ -1,6 +1,18 @@
 /** Shapes shared by the generated dataset and every view that renders it. */
 
-export type Family = 'LLM' | 'Coder' | 'Math' | 'VL' | 'OCR' | 'Prover' | 'Janus' | 'Reasoning'
+export type Family =
+  | 'LLM'
+  | 'Coder'
+  | 'Math'
+  | 'VL'
+  | 'OCR'
+  | 'Prover'
+  | 'Janus'
+  | 'Reasoning'
+  | 'Image'
+  | 'Video'
+  | 'Audio'
+  | 'Agent'
 
 /** How loudly a release should shout on the timeline. */
 export type Tier = 'flagship' | 'major' | 'minor'
@@ -21,6 +33,8 @@ export interface Release {
   id: string
   /** Hugging Face repo id, e.g. "deepseek-ai/DeepSeek-V3". */
   repo: string
+  /** Which lab shipped it; lets combined views label each node. */
+  org?: string
   /** Display name, e.g. "DeepSeek-V3". */
   name: string
   family: Family
@@ -79,7 +93,7 @@ export interface Breakthrough {
 }
 
 export interface Dataset {
-  /** Org slug, e.g. "deepseek-ai". */
+  /** Org slug, e.g. "deepseek-ai"; "combined" when several orgs are merged. */
   org: string
   /** Display name of the org. */
   orgName: string
@@ -89,4 +103,18 @@ export interface Dataset {
   repoCount: number
   releases: Release[]
   breakthroughs: Breakthrough[]
+}
+
+/** One lab whose open-weight models the chronicle tracks. */
+export interface OrgMeta {
+  /** Hugging Face org slug, matches `Dataset.org`. */
+  id: string
+  /** Display name, e.g. "智谱 GLM". */
+  name: string
+  /** Short label for the filter chips. */
+  short: string
+  /** One Chinese line shown under the switcher. */
+  blurb: string
+  /** Accent hue in HSL degrees; keeps families readable while labs stay distinct. */
+  hue: number
 }

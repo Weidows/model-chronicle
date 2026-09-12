@@ -12,7 +12,7 @@ import {
 } from 'motion/react'
 import { ChevronsLeftRight, Download, Heart, Maximize2, Sparkles } from 'lucide-react'
 
-import type { Dataset, Family, Release, Tier } from '../data/types'
+import type { Breakthrough, Dataset, Family, OrgMeta, Release, Tier } from '../data/types'
 import { familyLabel, familyTone, tierTone } from '../lib/tone'
 import { fmtCompact, fmtDate, yearFraction } from '../lib/format'
 import { cn, mapRange } from '../lib/utils'
@@ -25,44 +25,172 @@ import { DetailDialog } from './DetailDialog'
 const PAD_L = 200
 const PAD_R = 420
 const CARD_W = 206
-const CARD_H = 92
-const ROW_GAP = 112
-const ROWS = 4
-const GRID_TOP = 96 // breakthrough lane
-const ROWS_TOP = GRID_TOP + 34
-const AXIS_Y = ROWS_TOP + ROWS * ROW_GAP + 6
-const BARS_BASE = AXIS_Y + 6
+const CARD_H = 88
+const ROW_GAP = 104
+/** Row budget for release cards. Denser datasets open more rows instead of
+ *  printing cards on top of each other; the cap keeps the canvas on screen. */
+const MAX_ROWS = 6
 const BARS_MAX = 92
-const RULER_Y = BARS_BASE + BARS_MAX + 34
-const CANVAS_H = RULER_Y + 54
+
+/** Vertical budget, top to bottom: ghost year digits → breakthrough label
+ *  lanes → marker row → release rows → axis → download columns → ruler.
+ *  Only the lane count is dynamic, the rest is fixed chrome. */
+const NUMERAL_H = 58 // reserved strip for the 52px ghost year digits
+const BT_LANE_H = 12 // one lane of breakthrough labels
+const BT_MAX_LANES = 6 // hard cap so the band can never swallow the viewport
+const BT_LANE_GAP = 12 // minimum horizontal air between two labels on a lane
+const CHROME = { markerRow: 10, rowsGap: 34, barsGap: 6, rulerGap: 34, footH: 54 }
 
 const ALL_TIERS: Tier[] = ['flagship', 'major', 'minor']
-const ALL_FAMILIES: Family[] = ['LLM', 'Coder', 'Math', 'Prover', 'VL', 'Janus', 'OCR', 'Reasoning']
+const ALL_FAMILIES: Family[] = [
+  'LLM',
+  'Coder',
+  'Math',
+  'Prover',
+  'VL',
+  'Janus',
+  'OCR',
+  'Reasoning',
+  'Image',
+  'Video',
+  'Audio',
+  'Agent',
+]
 
 /** Horizontal pixel of a release, given the zoom (px per year) and origin. */
 function pxOf(iso: string, zoom: number, origin: number) {
   return PAD_L + (yearFraction(iso) - origin) * zoom
 }
 
-/** Greedy row packing so labels never collide at any zoom level. */
+/** Greedy row packing so labels never collide at any zoom level. Rows open as
+ *  the data gets denser; anything that still has no room is returned so the
+ *  caller can fold it into a "+N" chip rather than stack it on a neighbour. */
 function assignRows(list: Release[], zoom: number, origin: number) {
-  const minGap = CARD_W + 26 * mapRange(zoom, 700, 2200, 0.62, 1)
-  const rowEnd: number[] = Array.from({ length: ROWS }, () => -Infinity)
+  const minGap = CARD_W + 26 * mapRange(zoom, 700, 2600, 0.62, 1)
+  const rowEnd: number[] = []
   const placed: { release: Release; x: number; row: number }[] = []
+  const overflow: { release: Release; x: number }[] = []
   for (const release of [...list].sort((a, b) => a.date.localeCompare(b.date))) {
     const x = pxOf(release.date, zoom, origin)
     let row = rowEnd.findIndex((end) => x - end >= minGap)
     if (row === -1) {
-      // all rows busy: put it on the row that frees up earliest
-      row = rowEnd.indexOf(Math.min(...rowEnd))
+      if (rowEnd.length < MAX_ROWS) {
+        row = rowEnd.length
+        rowEnd.push(-Infinity)
+      } else {
+        overflow.push({ release, x })
+        continue
+      }
     }
     rowEnd[row] = x
     placed.push({ release, x, row })
   }
-  return placed
+  return { placed, overflow, rowCount: Math.max(1, rowEnd.length) }
 }
 
-export function Timeline({ data }: { data: Dataset }) {
+/** JetBrains Mono at 10px with tracking-widest measures ~7px per glyph. */
+function labelWidth(text: string) {
+  return text.length * 7 + 8
+}
+
+/**
+ * Breakthrough labels are centred on their marker, so any two dates closer than
+ * one label width would print on top of each other. Pack them into as many
+ * horizontal lanes as the data actually needs (capped by BT_MAX_LANES) and let
+ * the band grow downward — no overlap, no wasted space when labels are sparse.
+ */
+function assignLanes(list: Breakthrough[], zoom: number, origin: number) {
+  const items = list
+    .map((b) => {
+      const x = pxOf(b.date, zoom, origin)
+      const w = labelWidth(b.label)
+      return { b, x, w, left: x - w / 2, right: x + w / 2 }
+    })
+    .sort((a, b) => a.left - b.left)
+
+  const laneEnd: number[] = []
+  const tryPlace = (left: number, right: number) => {
+    let lane = laneEnd.findIndex((end) => left - end >= BT_LANE_GAP)
+    if (lane === -1 && laneEnd.length < BT_MAX_LANES) {
+      lane = laneEnd.length
+      laneEnd.push(-Infinity)
+    }
+    if (lane === -1) return -1
+    laneEnd[lane] = Math.max(laneEnd[lane], right)
+    return lane
+  }
+
+  const placed: {
+    key: string
+    x: number
+    w: number
+    lane: number
+    label?: string
+    b?: Breakthrough
+    cluster?: string[]
+  }[] = []
+  const overflow: typeof items = []
+
+  for (const it of items) {
+    const lane = tryPlace(it.left, it.right)
+    if (lane === -1) overflow.push(it)
+    else placed.push({ key: it.b.id, x: it.x, w: it.w, lane, label: it.b.label, b: it.b })
+  }
+
+  // Lanes are full: a same-day burst of breakthroughs would print on top of each
+  // other, so fold each dense cluster into one narrow "+N" chip that keeps the
+  // names in its tooltip. Guarantees zero label-on-label overlap at any zoom.
+  const clusters = new Map<number, { x: number; names: string[] }>()
+  for (const it of overflow) {
+    const key = Math.round(it.x / 28)
+    const g = clusters.get(key) ?? { x: it.x, names: [] }
+    g.names.push(it.b.label)
+    g.x = (g.x * (g.names.length - 1) + it.x) / g.names.length
+    clusters.set(key, g)
+  }
+  for (const [key, g] of clusters) {
+    const w = 30
+    let lane = tryPlace(g.x - w / 2, g.x + w / 2)
+    if (lane === -1) {
+      // Every lane is taken at this x too. Swap the nearest placed chip for one
+      // that carries every name: a 30px chip is narrower than the label it
+      // replaces, so turning a label into a cluster can only free up room.
+      let best = -1
+      for (let i = 0; i < placed.length; i++) {
+        if (placed[i].cluster) continue
+        const d = Math.abs(placed[i].x - g.x)
+        if (best === -1 || d < Math.abs(placed[best].x - g.x)) best = i
+      }
+      if (best !== -1) {
+        const victim = placed[best]
+        const names = [...(victim.cluster ?? [victim.label ?? '']), ...g.names]
+        placed[best] = { ...victim, w, cluster: names, label: undefined }
+        continue
+      }
+      lane = 0
+    }
+    placed.push({ key: `cluster-${key}`, x: g.x, w, lane, cluster: g.names })
+  }
+
+  return { placed, laneCount: Math.max(1, laneEnd.length) }
+}
+
+interface TimelineProps {
+  data: Dataset
+  /** Labs available for filtering; omitted on single-lab datasets. */
+  orgs?: OrgMeta[]
+  /** Org ids currently switched on. */
+  activeOrgs?: Set<string>
+  onToggleOrg?: (id: string) => void
+  /** Show the lab badge on every card (combined view). */
+  showOrg?: boolean
+}
+
+const orgShort = (id: string | undefined, orgs?: OrgMeta[]) =>
+  orgs?.find((o) => o.id === id)?.short ?? ''
+const orgHue = (id: string | undefined, orgs?: OrgMeta[]) => orgs?.find((o) => o.id === id)?.hue ?? 190
+
+export function Timeline({ data, orgs, activeOrgs, onToggleOrg, showOrg }: TimelineProps) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const [vw, setVw] = useState(1440)
   const [vh, setVh] = useState(880)
@@ -111,7 +239,58 @@ export function Timeline({ data }: { data: Dataset }) {
     restDelta: 0.3,
   })
 
-  const placed = useMemo(() => assignRows(visible, zoom, origin), [visible, zoom, origin])
+  const { placed, overflow, rowCount } = useMemo(
+    () => assignRows(visible, zoom, origin),
+    [visible, zoom, origin],
+  )
+
+  /** Zoom floor computed by bisection: the smallest px-per-year at which the row
+   *  packer seats every card without touching a neighbour. Adapts to the active
+   *  filters, so "all three labs" widens the track instead of stacking cards. */
+  const minZoom = useMemo(() => {
+    const fits = (z: number) => assignRows(visible, z, origin).overflow.length === 0
+    if (fits(720)) return 720
+    let lo = 720
+    let hi = 4000
+    if (!fits(hi)) return hi
+    for (let i = 0; i < 22; i++) {
+      const mid = (lo + hi) / 2
+      if (fits(mid)) hi = mid
+      else lo = mid
+    }
+    return Math.ceil(hi / 20) * 20
+  }, [visible, origin])
+
+  useEffect(() => {
+    setZoom((z) => (z < minZoom ? minZoom : z))
+  }, [minZoom])
+
+  /** Cards that still had no room (an ultra-tight same-day pile) become chips. */
+  const overflowGroups = useMemo(() => {
+    const groups = new Map<number, { key: number; x: number; items: typeof overflow }>()
+    for (const item of overflow) {
+      const k = Math.round(item.x / 26)
+      const g = groups.get(k) ?? { key: k, x: item.x, items: [] }
+      g.items.push(item)
+      groups.set(k, g)
+    }
+    return [...groups.values()]
+  }, [overflow])
+  const { placed: btPlaced, laneCount } = useMemo(
+    () => assignLanes(data.breakthroughs, zoom, origin),
+    [data.breakthroughs, zoom, origin],
+  )
+
+  /** The breakthrough band sizes itself to the labels it actually carries. */
+  const L = useMemo(() => {
+    const markerRow = NUMERAL_H + laneCount * BT_LANE_H + CHROME.markerRow
+    const rowsTop = markerRow + CHROME.rowsGap
+    const axisY = rowsTop + rowCount * ROW_GAP + CHROME.barsGap
+    const barsBase = axisY + CHROME.barsGap
+    const rulerY = barsBase + BARS_MAX + CHROME.rulerGap
+    return { markerRow, rowsTop, axisY, barsBase, rulerY, canvasH: rulerY + CHROME.footH }
+  }, [laneCount, rowCount])
+
   const maxDownloads = useMemo(
     () => Math.max(1, ...data.releases.map((r) => r.downloads)),
     [data.releases],
@@ -216,7 +395,33 @@ export function Timeline({ data }: { data: Dataset }) {
             ))}
           </div>
 
-          <div className="no-bar flex max-w-[52ch] items-center gap-1.5 overflow-x-auto">
+          {orgs && orgs.length > 1 ? (
+            <div className="flex items-center gap-1.5">
+              {orgs.map((o) => {
+                const on = !activeOrgs || activeOrgs.has(o.id)
+                return (
+                  <button
+                    key={o.id}
+                    onClick={() => onToggleOrg?.(o.id)}
+                    title={`${o.name} — ${o.blurb}`}
+                    className={cn(
+                      'inline-flex items-center gap-1.5 rounded-sm border px-2 py-1 font-mono text-[10px] tracking-wider whitespace-nowrap transition',
+                      on ? 'border-edge text-snow/90' : 'border-edge/60 text-fog/45 hover:text-fog',
+                    )}
+                    style={on ? { background: `hsl(${o.hue} 85% 66% / 0.13)` } : undefined}
+                  >
+                    <span
+                      className="size-1.5 rounded-full"
+                      style={{ background: `hsl(${o.hue} 85% 66% / ${on ? 1 : 0.35})` }}
+                    />
+                    {o.short}
+                  </button>
+                )
+              })}
+            </div>
+          ) : null}
+
+          <div className="no-bar flex min-w-0 flex-1 items-center gap-1.5 overflow-x-auto">
             {ALL_FAMILIES.filter((f) => data.releases.some((r) => r.family === f)).map((f) => (
               <button
                 key={f}
@@ -237,8 +442,8 @@ export function Timeline({ data }: { data: Dataset }) {
             <span className="label-hud hidden sm:inline">分辨率</span>
             <Slider.Root
               value={[zoom]}
-              min={720}
-              max={2200}
+              min={minZoom}
+              max={Math.max(2200, minZoom + 400)}
               step={20}
               onValueChange={([v]) => setZoom(v)}
               className="relative flex h-4 w-28 touch-none items-center select-none sm:w-40"
@@ -261,21 +466,26 @@ export function Timeline({ data }: { data: Dataset }) {
             style={{ x, width: trackW + PAD_R }}
             className="absolute top-1/2 left-0 -translate-y-1/2"
           >
-            <div className="relative" style={{ height: CANVAS_H }}>
-              {/* epoch bands + ghost year numerals */}
+            <div className="relative" style={{ height: L.canvasH }}>
+              {/* epoch bands + ghost year numerals.
+                  The numerals are decorative: they live in their own reserved
+                  strip above the label lanes and are hidden from a11y. */}
               {years.map((y) => {
                 const left = PAD_L + (y - origin) * zoom
                 return (
-                  <div key={y} className="absolute top-0" style={{ left, height: CANVAS_H }}>
+                  <div key={y} className="absolute top-0" style={{ left, height: L.canvasH }}>
                     <div className="absolute top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-edge/70 to-transparent" />
-                    <span className="font-display absolute -top-2 -left-1 text-[86px] leading-none font-bold text-snow/4 select-none">
+                    <span
+                      aria-hidden="true"
+                      className="font-display absolute -top-1 left-1.5 text-[52px] leading-none font-bold text-snow/5 select-none"
+                    >
                       {y}
                     </span>
                     {[0.25, 0.5, 0.75].map((q) => (
                       <div
                         key={q}
                         className="absolute h-px bg-edge/45"
-                        style={{ left: q * zoom, width: 8, top: AXIS_Y }}
+                        style={{ left: q * zoom, width: 8, top: L.axisY }}
                       />
                     ))}
                   </div>
@@ -285,38 +495,51 @@ export function Timeline({ data }: { data: Dataset }) {
               {/* axis beam */}
               <div
                 className="absolute h-px bg-gradient-to-r from-cyan/10 via-cyan/70 to-cyan/10"
-                style={{ top: AXIS_Y, left: 0, width: trackW }}
+                style={{ top: L.axisY, left: 0, width: trackW }}
               />
               <div
                 className="absolute h-[3px] blur-[3px]"
                 style={{
-                  top: AXIS_Y - 1,
+                  top: L.axisY - 1,
                   left: 0,
                   width: trackW,
                   background: 'linear-gradient(90deg, transparent, rgba(56,226,255,0.5), transparent)',
                 }}
               />
 
-              {/* breakthrough markers */}
-              {data.breakthroughs.map((b) => {
-                const xb = pxOf(b.date, zoom, origin)
+              {/* breakthrough markers — one label per packed lane, each tied back
+                  to its own diamond by a stub so dense clusters stay readable */}
+              {btPlaced.map(({ key, label, cluster, x: xb, w, lane }) => {
+                const labelTop = NUMERAL_H + lane * BT_LANE_H
+                const stubTop = labelTop + BT_LANE_H - 2
                 return (
                   <motion.div
-                    key={b.id}
-                    initial={{ opacity: 0, y: -6 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    key={key}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
                     transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                     className="group absolute"
-                    style={{ left: xb, top: GRID_TOP - 34 }}
+                    style={{ left: xb, top: 0, width: 1, height: L.canvasH }}
                   >
-                    <div className="flex flex-col items-center gap-1">
-                      <span className="font-mono text-[10px] tracking-widest whitespace-nowrap text-amber/85 group-hover:text-amber">
-                        {b.label}
-                      </span>
-                      <span className="size-2 rotate-45 border border-amber/70 bg-amber/25 shadow-[0_0_10px_rgba(255,181,69,0.5)]" />
-                    </div>
-                    <div className="absolute top-4 left-1/2 h-[calc(var(--h))] w-px -translate-x-1/2 bg-gradient-to-b from-amber/45 to-transparent" style={{ ['--h' as string]: `${AXIS_Y - GRID_TOP + 4}px`, height: AXIS_Y - GRID_TOP + 4 }} />
+                    <span
+                      className="font-mono absolute block text-[10px] leading-none tracking-widest text-amber/85 transition group-hover:text-amber"
+                      style={{ top: labelTop, left: -w / 2, width: w, textAlign: 'center', whiteSpace: 'nowrap' }}
+                      title={cluster ? cluster.join(' · ') : undefined}
+                    >
+                      {cluster ? `+${cluster.length}` : label}
+                    </span>
+                    <span
+                      className="absolute w-px bg-amber/25"
+                      style={{ top: stubTop, left: -0.5, height: Math.max(2, L.markerRow - stubTop) }}
+                    />
+                    <span
+                      className="absolute size-2 rotate-45 border border-amber/70 bg-amber/25 shadow-[0_0_10px_rgba(255,181,69,0.5)]"
+                      style={{ top: L.markerRow - 4, left: -3.5 }}
+                    />
+                    <span
+                      className="absolute w-px bg-gradient-to-b from-amber/45 to-transparent"
+                      style={{ top: L.markerRow + 4, left: -0.5, height: Math.max(0, L.axisY - L.markerRow - 4) }}
+                    />
                   </motion.div>
                 )
               })}
@@ -324,8 +547,9 @@ export function Timeline({ data }: { data: Dataset }) {
               {/* releases */}
               {placed.map(({ release, x: px, row }, i) => {
                 const tone = familyTone[release.family]
-                const cardBottom = ROWS_TOP + row * ROW_GAP + CARD_H
+                const cardBottom = L.rowsTop + row * ROW_GAP + CARD_H
                 const isFocus = focused?.id === release.id
+                const lab = showOrg ? orgShort(release.org, orgs) : ''
                 return (
                   <div key={release.id}>
                     {/* connector */}
@@ -334,7 +558,7 @@ export function Timeline({ data }: { data: Dataset }) {
                       style={{
                         left: px + 14,
                         top: cardBottom,
-                        height: Math.max(0, AXIS_Y - cardBottom),
+                        height: Math.max(0, L.axisY - cardBottom),
                         background: `linear-gradient(180deg, ${tone.hex}55, ${tone.hex}12)`,
                       }}
                     />
@@ -355,10 +579,19 @@ export function Timeline({ data }: { data: Dataset }) {
                         release.tier === 'minor' && 'opacity-80 hover:opacity-100',
                         isFocus ? 'ring-1 ring-cyan/45' : 'hover:-translate-y-1',
                       )}
-                      style={{ left: px, top: ROWS_TOP + row * ROW_GAP, width: CARD_W, height: CARD_H }}
+                      style={{ left: px, top: L.rowsTop + row * ROW_GAP, width: CARD_W, height: CARD_H }}
                     >
                       <div className="flex items-center justify-between gap-2">
-                        <span className="num text-[10px] text-fog/80">{fmtDate(release.date)}</span>
+                        <span className="num inline-flex items-center gap-1 text-[10px] text-fog/80">
+                          {lab ? (
+                            <span
+                              className="size-1.5 shrink-0 rounded-full"
+                              style={{ background: `hsl(${orgHue(release.org, orgs)} 85% 66%)` }}
+                            />
+                          ) : null}
+                          {lab ? <span className="font-mono text-[9px] text-fog/60">{lab}</span> : null}
+                          {fmtDate(release.date)}
+                        </span>
                         {release.tier === 'flagship' ? (
                           <Chip tone="amber">
                             <Sparkles className="size-2.5" strokeWidth={2} />
@@ -372,14 +605,14 @@ export function Timeline({ data }: { data: Dataset }) {
                       </div>
                       <p
                         className={cn(
-                          'mt-1 truncate font-display text-[13px] font-medium tracking-tight',
+                          'mt-1 line-clamp-2 font-display text-[12.5px] leading-[1.15] font-medium tracking-tight',
                           tone.text,
                         )}
                         title={release.name}
                       >
                         {release.name}
                       </p>
-                      <div className="mt-1.5 flex items-center gap-2 font-mono text-[10px] text-fog/85">
+                      <div className="mt-1 flex min-w-0 items-center gap-2 font-mono text-[10px] text-fog/85">
                         <span className="inline-flex items-center gap-1">
                           <Download className="size-3" strokeWidth={1.8} />
                           {fmtCompact(release.downloads)}
@@ -389,7 +622,9 @@ export function Timeline({ data }: { data: Dataset }) {
                           {fmtCompact(release.likes)}
                         </span>
                         {release.totalParams ? (
-                          <span className="ml-auto text-fog/60">{release.totalParams}</span>
+                          <span className="ml-auto truncate text-fog/60" title={release.totalParams}>
+                            {release.totalParams}
+                          </span>
                         ) : null}
                       </div>
                       <span
@@ -401,7 +636,7 @@ export function Timeline({ data }: { data: Dataset }) {
                     {/* axis node */}
                     <div
                       className="absolute -translate-x-1/2 -translate-y-1/2"
-                      style={{ left: px + 14, top: AXIS_Y }}
+                      style={{ left: px + 14, top: L.axisY }}
                     >
                       {release.tier === 'flagship' ? (
                         <span
@@ -432,7 +667,7 @@ export function Timeline({ data }: { data: Dataset }) {
                       data-bar={release.id}
                       style={{
                         left: px + 11,
-                        top: BARS_BASE,
+                        top: L.barsBase,
                         width: 5,
                         height: Math.max(
                           6,
@@ -446,34 +681,34 @@ export function Timeline({ data }: { data: Dataset }) {
                 )
               })}
 
-              {/* download scale: baseline + log reference lines */}
-              <div className="absolute" style={{ top: BARS_BASE, left: 0, width: trackW }}>
+              {/* same-day pile: a card that cannot be seated without touching a
+                  neighbour is folded into a chip that still opens the first one */}
+              {overflowGroups.map((g) => (
+                <button
+                  key={`pile-${g.key}`}
+                  onClick={() => setSelected(g.items[0].release)}
+                  title={g.items.map((i) => `${i.release.name} · ${fmtDate(i.release.date)}`).join('\n')}
+                  className="absolute rounded-sm border border-cyan/45 bg-void/85 px-1 font-mono text-[9px] leading-[16px] text-cyan/85 transition hover:bg-cyan/15"
+                  style={{ left: g.x, top: L.rowsTop, width: 30, height: 18 }}
+                >
+                  +{g.items.length}
+                </button>
+              ))}
+
+              {/* download scale: baseline + log reference lines. The numeric key
+                  lives in a fixed left overlay, so values never scroll under the
+                  floating readout or repeat once per year. */}
+              <div className="absolute" style={{ top: L.barsBase, left: 0, width: trackW }}>
                 <div className="h-px w-full bg-gradient-to-r from-edge/15 via-edge/55 to-edge/15" />
                 {[1e4, 1e5, 1e6, 1e7].map((v) => {
                   if (v > maxDownloads * 1.5) return null
                   const h = BARS_MAX * (Math.log10(v + 1) / Math.log10(maxDownloads + 1))
-                  return (
-                    <div key={v} className="absolute" style={{ top: h, left: 0, width: trackW }}>
-                      <div className="h-px w-full bg-edge/25" />
-                      {years.map((y) => (
-                        <span
-                          key={y}
-                          className="num absolute text-[9px] text-fog/40"
-                          style={{ left: PAD_L + (y - origin) * zoom + 8, top: -12 }}
-                        >
-                          {fmtCompact(v)}
-                        </span>
-                      ))}
-                    </div>
-                  )
+                  return <div key={v} className="absolute h-px w-full bg-edge/25" style={{ top: h }} />
                 })}
-                <span className="num absolute -top-5 left-6 text-[9px] tracking-widest text-fog/45">
-                  近 30 天下载 · LOG
-                </span>
               </div>
 
               {/* ruler */}
-              <div className="absolute" style={{ top: RULER_Y, left: 0, width: trackW }}>
+              <div className="absolute" style={{ top: L.rulerY, left: 0, width: trackW }}>
                 <div className="h-px w-full bg-edge/70" />
                 {years.map((y) => {
                   const left = PAD_L + (y - origin) * zoom
@@ -500,19 +735,23 @@ export function Timeline({ data }: { data: Dataset }) {
           {/* lane rail */}
           <div
             data-rail="lanes"
-            className="pointer-events-none absolute left-3 z-10 hidden lg:block"
-            style={{ top: '50%', height: CANVAS_H, transform: `translateY(-${CANVAS_H / 2}px)` }}
+            className="pointer-events-none absolute left-3 z-10 hidden w-[13rem] lg:block"
+            style={{ top: '50%', height: L.canvasH, transform: `translateY(-${L.canvasH / 2}px)` }}
           >
             {[
-              { top: GRID_TOP - 42, label: '技术突破', cls: 'text-amber/65' },
-              { top: ROWS_TOP + ROW_GAP * 1.5 - 9, label: '发布节点', cls: 'text-cyan/55' },
-              { top: AXIS_Y - 9, label: '时间轴', cls: 'text-snow/45' },
-              { top: BARS_BASE + BARS_MAX / 2 - 9, label: '下载柱', cls: 'text-mint/55' },
+              {
+                top: Math.max(0, NUMERAL_H + (laneCount * BT_LANE_H) / 2 - 5),
+                label: '技术突破',
+                cls: 'text-amber/65',
+              },
+              { top: L.rowsTop + ROW_GAP * 1.5 - 9, label: '发布节点', cls: 'text-cyan/55' },
+              { top: L.axisY - 9, label: '时间轴', cls: 'text-snow/45' },
+              { top: L.barsBase + BARS_MAX / 2 - 9, label: '下载柱', cls: 'text-mint/55' },
             ].map((lane) => (
               <span
                 key={lane.label}
                 className={cn(
-                  'num absolute left-0 inline-flex items-center gap-1.5 bg-void/75 py-0.5 pr-2 text-[10px] tracking-[0.2em]',
+                  'num absolute left-0 inline-flex items-center gap-1.5 bg-void/75 py-0.5 pr-2 whitespace-nowrap text-[10px] tracking-[0.2em]',
                   lane.cls,
                 )}
                 style={{ top: lane.top }}
@@ -521,6 +760,40 @@ export function Timeline({ data }: { data: Dataset }) {
                 {lane.label}
               </span>
             ))}
+          </div>
+
+          {/* download-axis key — pinned to the left gutter, out of the moving track */}
+          <div
+            data-axis="download"
+            className="pointer-events-none absolute left-3 z-10 hidden w-[13rem] lg:block"
+            style={{ top: '50%', height: L.canvasH, transform: `translateY(-${L.canvasH / 2}px)` }}
+          >
+            <span
+              className="num absolute left-[7.5rem] bg-void/75 py-0.5 pr-2 whitespace-nowrap text-[9px] tracking-widest text-mint/45"
+              style={{ top: L.barsBase - 22 }}
+            >
+              近 30 天下载 · LOG
+            </span>
+            {(() => {
+              let last = -Infinity
+              return [1e4, 1e5, 1e6, 1e7].map((v) => {
+                if (v > maxDownloads * 1.5) return null
+                const h = BARS_MAX * (Math.log10(v + 1) / Math.log10(maxDownloads + 1))
+                // a log axis can bunch its decades together: drop a label rather
+                // than print it into the one above
+                if (h - last < 13) return null
+                last = h
+                return (
+                  <span
+                    key={v}
+                    className="num absolute left-[7.5rem] bg-void/75 py-0.5 pr-2 text-[9px] leading-none whitespace-nowrap text-fog/45"
+                    style={{ top: L.barsBase + h - 5 }}
+                  >
+                    {fmtCompact(v)}
+                  </span>
+                )
+              })
+            })()}
           </div>
 
           {/* playhead */}

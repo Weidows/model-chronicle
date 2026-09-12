@@ -1166,7 +1166,7 @@ export const dataset: Dataset = {
       "totalParams": "9B",
       "paramsSource": "card",
       "activatedParams": null,
-      "contextLength": "64k",
+      "contextLength": "64K",
       "license": "mit",
       "downloads": 177072,
       "likes": 788,
@@ -1386,7 +1386,7 @@ export const dataset: Dataset = {
       "totalParams": "9B",
       "paramsSource": "card",
       "activatedParams": null,
-      "contextLength": "128k",
+      "contextLength": "128K",
       "license": "mit",
       "downloads": 78394,
       "likes": 628,
@@ -2646,7 +2646,7 @@ export const dataset: Dataset = {
       "lane": "多模态",
       "mechanism": "首个以「思考范式 + 强化学习」训练的 GLM-V 模型，在 28 项基准中 23 项为 10B 级最佳、18 项超越 Qwen-2.5-VL-72B。",
       "impact": "基于 GLM-4-9B-0414 的 9B 视觉语言推理模型，在 10B 级 VLM 中取得 SOTA。",
-      "magnitude": "上下文 64k"
+      "magnitude": "上下文 64K"
     },
     {
       "id": "glm-glm-4-5",
@@ -2701,7 +2701,7 @@ export const dataset: Dataset = {
       "lane": "多模态",
       "mechanism": "首次在 GLM-V 系列引入原生 Function Calling，把「视觉感知」直接接到「可执行动作」。",
       "impact": "GLM-4.6V 系列的 9B 轻量多模态模型，面向本地部署与低延迟场景。",
-      "magnitude": "上下文 128k"
+      "magnitude": "上下文 128K"
     },
     {
       "id": "glm-autoglm-phone-9b",

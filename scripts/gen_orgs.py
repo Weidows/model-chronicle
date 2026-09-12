@@ -132,7 +132,8 @@ def norm_ctx(raw) -> str | None:
             return f"{round(n / 1_000_000)}M"
         if n >= 1024:
             return f"{round(n / 1024)}K"
-    return s
+    # unify the unit case: cards write 128k / 64k / 1m interchangeably
+    return re.sub(r"([0-9])\s*([kmg])(?![a-zA-Z])", lambda m: m.group(1) + m.group(2).upper(), s)
 
 
 def magnitude_of(rel: dict) -> str:

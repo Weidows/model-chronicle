@@ -39,8 +39,8 @@ export function Hero({ data }: { data: Dataset }) {
           >
             <HudLabel>open-source chronicle</HudLabel>
             <span className="h-px w-10 bg-gradient-to-r from-cyan/60 to-transparent" />
-            <span className="num text-[11px] text-fog/70">
-              数据快照 {fmtDate(data.snapshot)} · {data.org}
+            <span className="num text-[11px] whitespace-nowrap text-fog/70">
+              数据快照 {fmtDate(data.snapshot)} · {data.org === 'combined' ? '三家并看' : data.org}
             </span>
           </motion.div>
 

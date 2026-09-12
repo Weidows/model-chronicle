@@ -50,7 +50,7 @@ export const dataset: Dataset = {
       "totalParams": "6B",
       "paramsSource": "card",
       "activatedParams": null,
-      "contextLength": "32K（对话阶段按 8K 训练）",
+      "contextLength": "32K",
       "license": "Apache-2.0（代码）/ Model License（模型权重）",
       "downloads": 442087,
       "likes": 2056,
@@ -116,7 +116,7 @@ export const dataset: Dataset = {
       "totalParams": "60 亿",
       "paramsSource": "card",
       "activatedParams": null,
-      "contextLength": "8192（最大序列长度）",
+      "contextLength": "8K",
       "license": "Apache-2.0（代码）/ Model License（模型权重）",
       "downloads": 322,
       "likes": 258,
@@ -395,7 +395,7 @@ export const dataset: Dataset = {
       "totalParams": "9B",
       "paramsSource": "card",
       "activatedParams": null,
-      "contextLength": "128K（另有支持 1M 上下文的版本）",
+      "contextLength": "128K",
       "license": "GLM-4 License（other）",
       "downloads": 87488,
       "likes": 708,
@@ -2492,7 +2492,7 @@ export const dataset: Dataset = {
       "lane": "训练",
       "mechanism": "上下文长度由初代的 2K 扩展至 32K（对话 8K 训练），同时推理速度提升 42%、INT4 下 6G 显存支持对话长度由 1K 提升到 8K。",
       "impact": "ChatGLM-6B 的第二代版本，借 FlashAttention 与 Multi-Query Attention 把上下文从 2K 提到 32K、推理提速 42%，同尺寸开源模型中竞争力显著增强。",
-      "magnitude": "上下文 32K（对话阶段按 8K 训练）"
+      "magnitude": "上下文 32K"
     },
     {
       "id": "glm-codegeex2-6b",
@@ -2503,7 +2503,7 @@ export const dataset: Dataset = {
       "lane": "训练",
       "mechanism": "仅 60 亿参数即在 HumanEval-X 上超越 150 亿参数的 StarCoder-15B（Python Pass@1 35.9%）。",
       "impact": "CodeGeeX2-6B 是基于 ChatGLM2-6B 架构、经 600B 代码 token 预训练的多语言代码生成模型，Python HumanEval-X Pass@1 达 35.9%，用 6B 参数超过 15B 的 StarCoder-15B。",
-      "magnitude": "上下文 8192（最大序列长度）"
+      "magnitude": "上下文 8K"
     },
     {
       "id": "glm-chatglm3-6b",
@@ -2558,7 +2558,7 @@ export const dataset: Dataset = {
       "lane": "推理",
       "mechanism": "把 128K 长上下文、26 种多语言与 Function Call 工具调用同时下放到 9B 开源模型（BFCL Overall Acc. 81.00，逼近 gpt-4-turbo 的 81.24）。",
       "impact": "GLM-4 系列的开源对话模型 GLM-4-9B-Chat，支持 128K 上下文、26 种语言、网页浏览与工具调用，是同代 9B 级开源模型的主力版本。",
-      "magnitude": "上下文 128K（另有支持 1M 上下文的版本）"
+      "magnitude": "上下文 128K"
     },
     {
       "id": "glm-glm-4v-9b",

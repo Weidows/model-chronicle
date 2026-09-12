@@ -123,7 +123,7 @@ def norm_ctx(raw) -> str | None:
     show one unit so the context chip stays readable (1048576 → 1M)."""
     if raw is None:
         return None
-    s = str(raw).strip()
+    s = re.split(r"[（(]", str(raw))[0].strip()  # card commentary stays out of the chip
     if s.isdigit():
         n = int(s)
         if n >= 1_048_576 and n % 1_048_576 == 0:
